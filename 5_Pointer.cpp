@@ -19,6 +19,8 @@ using namespace std;
 //     a = b;
 //     b = temp;
 //     cout << "Inside swapByValue: a = " << a << ", b = " << b << endl;
+//     a=b;
+//     b=a-(b=a)+b;
 // }
 // int main() {
 //     int x,y;
@@ -35,7 +37,8 @@ using namespace std;
 
 
 
-// TODO: Swap By Reference"
+// TODO: "Swap By Reference"
+
 // void swapByReference(int &a, int &b) {
 //     int temp = a;
 //     a = b;
@@ -50,6 +53,7 @@ using namespace std;
 //     cout << "After swapByReference: x = " << x << ", y = " << y << endl;  
 //     return 0;
 // }
+
 
 
 
@@ -125,20 +129,20 @@ using namespace std;
 
 // TODO: "Swap Using Pointers"
 
-void swap(int *x,int*y){
-    int temp = *x;
-    *x=*y;
-    *y=temp;
-    return;
-}
-int main(){
-    int a=8,b=6;
-    int *x=&a;
-    int *y=&b;
+// void swap(int *x,int*y){
+//     int temp = *x;
+//     *x=*y;
+//     *y=temp;
+//     return;
+// }
+// int main(){
+//     int a=8,b=6;
+//     int *x=&a;
+//     int *y=&b;
 
-    swap(a,b);
-    cout<<"a: "<<a<<" b: "<<b;
-}
+//     swap(a,b);
+//     cout<<"a: "<<a<<" b: "<<b;
+// }
 
 
 
@@ -284,6 +288,7 @@ int main(){
 
 
 // TODO: "Pointer to Pointer Dereferencing(Double pointer)
+
 // int main(){
 //     int x=5;
 //     int *p1=&x;

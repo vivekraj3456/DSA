@@ -20,15 +20,18 @@
 
 // Continue until all positive terms are displayed. Ensure clear logic and comments.
 
-#include<iostream>
-using namespace std;
-int main(){
-    int n,i=100;
-    for(i;i>0;i--){
-        cout<<i<<endl;
-        i=i-2;
-    }
-}
+
+// #include<iostream>
+// using namespace std;
+// int main(){
+//     int n,i=100;
+//     for(i;i>0;i--){
+//         cout<<i<<endl;
+//         i=i-2;
+//     }
+// }
+
+
 
 
 // TODO: Implement another method to display the AP sequence using a 'for' loop.  Start from 100 and decrement by 3 until reaching a value less than or equal to 34.
@@ -43,19 +46,12 @@ int main(){
 //     return 0;
 // }
 
-// TODO: WAP to 
-
-
-
-
-
-
-
 
 
 
 // TODO: Explore the 'while' loop by creating:
-// 1. An infinite loop (for testing) — print numbers starting from 1. 
+
+// TODO:1. An infinite loop (for testing) — print numbers starting from 1. 
 
 // #include<iostream>
 // using namespace std;
@@ -66,7 +62,8 @@ int main(){
 //     x=x+1;
 // }
 // }
-// 2. A counter-controlled loop — print numbers from 0 to 999. 
+
+/* 2. A counter-controlled loop — print numbers from 0 to 999. */
 
 // #include<iostream>
 // using namespace std;
@@ -79,13 +76,12 @@ int main(){
 //     return 0;
 // }
 
-// 3. A formatted output loop — print numbers from 0 to 9999, padded with leading zeros (e.g., 0000, 0001,...).
+// TODO: 3. A formatted output loop — print numbers from 0 to 9999, padded with leading zeros (e.g., 0000, 0001,...).
 
 
 
 // #include <iostream>
 // using namespace std;
-
 // int main() {
 //     int x = 0;
 //     while (x < 10000) {
@@ -119,18 +115,39 @@ int main(){
 // }
 
 // TODO: Add user input to control the range of loops — ask for start, end, and increment values.
-// #include <iostream>
-// using namespace std;
 
-// int main() {
-//     int x = 0;
-//     while (x < 10000) {
-//         string output = to_string(x);  // Convert x to a string
-//         while (output.length() < 5) {  // Add leading zeros until the length is 4
-//             output = '0' + output;
+
+#include <iostream>
+using namespace std;
+int main() {
+    int x = 0;
+    while (x < 10000) {
+        string output = to_string(x);  // Convert x to a string
+        while (output.length() < 4) {  // Add leading zeros until the length is 4
+            output = '0' + output;
+        }
+        cout << output << endl;        // Print the formatted string
+        x = x + 1;
+    }
+    return 0;
+}
+
+// TODO:now using for loop
+
+// #include<iostream>
+// using namespace std;
+// int main(){
+
+//     int start, end , increment;
+//     cout<<"Enter start, end and increment values";
+//     cin>>start>>end>>increment;
+
+//     for(int i=start; i<=end; i+=increment){
+//         string output = to_string(i);
+//         while(output.length() < 5){
+//             cout<< '0' + output;
 //         }
-//         cout << output << endl;        // Print the formatted string
-//         x = x + 1;
+//         cout<<output<<endl;
 //     }
-//     return 0;
+
 // }

@@ -1,4 +1,5 @@
 // TODO: Multiplication_Function
+
 // #include<iostream>
 // using namespace std;
 // int multiply(int x, int y){
@@ -14,18 +15,22 @@
 // TODO: Star_Pattern_Program
 // #include<iostream>
 // using namespace std;
-// void star(int x){
+// int
+// star(int x){
 //     for(int i=1;i<=x;i++){
 //         for(int j=1;j<=i;j++){
 //             cout<<"*";
 //             }
 //             cout<<endl;
+//         }
 //     }
-// }
-// int main(){
-//     star(2);
-//     star(3);
-//     star(4);
+//     int main(){
+//         star(2);
+//         cout<<endl;
+//         star(3);
+//         cout<<endl;
+//         star(4);
+//         cout<<endl;
 // }
 
 // TODO: Sum_Function_Program
@@ -50,19 +55,19 @@
 //     cin>>x;
 //     cout<<"y:"; 
 //     cin>>y;
-//     cout<<"min:"<<min(x,y)<<endl;
-//     cout<<"max:"<<max(x,y)<<endl;;
-//     cout<<"power:"<<pow(x,y)<<endl;
-//     cout<<"square root:"<<sqrt(9)<<endl;
+//     cout<<"min:"<<min(x,y)<<endl;  //inbuilt function
+//     cout<<"max:"<<max(x,y)<<endl;  //inbuilt function
+//     cout<<"power:"<<pow(x,y)<<endl; //by default pow fn return double value
+//     cout<<"square root:"<<sqrt(9)<<endl; //by default sqrt fn return double value
 // }
 
 
 
 // TODO: Factorial_function
+
 // #include<iostream>
 // using namespace std;
-// int
-//  fact(int n){
+// int fact(int n){
 //     int f=1;
 //         for(int i=2;i<=n;i++){
 //         f*=i;
@@ -99,7 +104,7 @@
 //     }
 //     int nrfact=1;
 //     for(int i=2;i<=n-r;i++){
-//        nrfact*=i;
+//     nrfact*=i;
 //     }
 //     int ncr=nfact/(nrfact*rfact);
 //     cout<<ncr;
@@ -145,6 +150,7 @@
 
 //TODO: Calculate 
 // #include<bits/stdc++.h>
+// // #include<iostream>
 // using namespace std;
 // int fact(int x){
 //     int f=1;
@@ -179,7 +185,6 @@
 
 // TODO: pascal triangle
 #include<iostream>
-#include<bits/stdc++.h>
 using namespace std;
 int fact(int x){
     int f=1;
@@ -210,35 +215,51 @@ int main(){
 // #include <iostream>
 // using namespace std;
 
-// // global variable
+// // Global variable declaration
 // int global = 5;
 
-// // global variable accessed from within a function
-//     int local=15;
-// void display() { 
-//     int local=15;
-//     cout << global <<" "<<local<< endl; 
+// // Another global variable
+// int global1 = 15;
+
+// // Function to display values
+// void display() {
+//     // Local variable (only accessible within this function)
+//     int local = 15;
+
+//     // Accessing global and local variables
+//     cout << global << " " << global1 << " " << local << endl;
 // }
 
-// // main function
+// // Main function
 // int main() {
-//     display(); // Prints the current value of the global variable (5)
+//     // First function call (prints global = 5, global1 = 15, local = 15)
+//     display();
 
-//     // Changing the value of the global variable
+//     // Changing the value of global variable
 //     global = 10;
-//     display(); // Prints the updated value of the global variable (10)
-//     cout<<local<<endl;
-// }
 
+//     // Second function call (prints updated global = 10, global1 = 15, local = 15)
+//     display();
+
+//     // Accessing global1 from main (allowed, since it's global)
+//     cout << global1 << endl;
+
+//     // Trying to access 'local' here would cause an error because it's local to 'display()'
+//     // cout << local; // ❌ Error: 'local' is not declared in this scope
+
+//     return 0;
+// }
 
 // TODO: default value argument
+
 // #include<iostream>
 // using namespace std;
 // void fun(int x=8,float y=3.1){
 //     cout<<x<<" "<<y<<endl;
 // }
 // int main(){
-//     fun(3.4);
+//     fun(3.4); //x = 3.4 → gets converted to int → x = 3
+//              //y not passed → uses default y = 3.1
 // }
 
 // TODO: WAP to compute the greatest common divisor(GCD)
@@ -251,7 +272,7 @@ int main(){
 //     cin>>n>>m;
 //     cout<<"GCD is: ";
 //     for(int i=1;i<=min(n,m);i++){
-//         if(n%i==0 & m%i==0){
+//         if(n%i==0 & m%i==0){}
 //             cout<<i<<" ";
 //         }
 //     }

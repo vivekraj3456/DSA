@@ -1,4 +1,4 @@
-// TODO: Ques : Take positive integer input and tell if it is even or odd
+// TODO: 1 Ques : Take positive integer input and tell if it is even or odd
 
 // #include<iostream>
 // using namespace std;
@@ -18,7 +18,7 @@
 //     return 0;
 // }
 
-// TODO: Ques : Given an integer: Print the absolute value of that integer.
+// TODO: 2 Ques : Given an integer: Print the absolute value of that integer.
 
 // #include<iostream>
 // using namespace std;
@@ -39,7 +39,7 @@
 
 
 
-// TODO: Ques : If cost price and selling price of an item is input through the keyboard, write a program to determine whether the seller has made profit or incurred loss. Also determine how much profit he made or loss he incurred.
+// TODO: 3 Ques : If cost price and selling price of an item is input through the keyboard, write a program to determine whether the seller has made profit or incurred loss. Also determine how much profit he made or loss he incurred.
 
 
 
@@ -61,10 +61,41 @@
 //     return 0;
 // }
 
+//METHOD-2
+
+
+// #include<iostream>
+// using namespace std;
+// int main(){
+
+//     int cp,sp;
+//     cout<<"Enter cp: ";
+//     cin>>cp;
+//     cout<<"Enter sp: ";
+//     cin>>sp;
+
+
+//     if(sp>cp){
+//         int profit=sp-cp;
+//         cout<<"profit: "<<profit<<endl;
+// }
+
+//     else if (cp>sp){
+//         int loss=cp-sp;
+//         cout<<"loss: "<<loss<<endl;
+//     }
+
+//     else{
+//         cout<<"No profit no loss"<<endl;
+//     }
+
+//     return 0;
+// }
 
 
 
-// TODO: Ques : Take positive integer input and tell if it is a three digit number or not.
+
+// TODO: 4 Ques : Take positive integer input and tell if it is a three digit number or not.
 
 // #include<iostream>
 // using namespace std;
@@ -84,7 +115,7 @@
 
 
 
-// TODO: Ques : Take positive integer input and tell if it is divisible by 5 and 3.
+// TODO: 5 Ques : Take positive integer input and tell if it is divisible by 5 and 3.
 
 
 // #include<iostream>
@@ -103,7 +134,10 @@
 // }
 
 
-// TODO: Ques : Take 3 positive integers input and print the greatest of them.
+// TODO: 6 Ques : Take 3 positive integers input and print the greatest of them.
+
+
+
 
 // #include<iostream>
 // using namespace std;
@@ -127,7 +161,14 @@
 // }
 
 
-// TODO: Ques : Write a program to check whether a character is an alphabet or not.
+
+
+// TODO: 7 Ques : Write a program to check whether a character is an alphabet or not.
+
+
+
+
+
 
 // #include<iostream>
 // using namespace std;
@@ -146,7 +187,8 @@
 
 
 
-// TODO: Ques : Take positive integer input and tell if it is divisible by 5 or 3 but not divisible by 15.
+
+// TODO: 8 Ques : Take positive integer input and tell if it is divisible by 5 or 3 but not divisible by 15.
 
 // #include <iostream>
 // using namespace std;
@@ -185,7 +227,7 @@
 // }
 
 
-// TODO: Ques : Take input marks of a student and print the Grade according to marks:
+// TODO: 9 Ques : Take input marks of a student and print the Grade according to marks:
 // 1)91-100 Excellent
 // 2)81-90 very Good
 // 3)71-80 Good
@@ -223,6 +265,8 @@
 // }
 
 //Method-2
+
+
 // #include<iostream>
 // using namespace std;
 // int main(){
@@ -265,7 +309,7 @@
 
 
 
-// TODO: Ques : Take 3 numbers input and tell if they can be the sides of a triangle.
+// TODO: 10 Ques : Take 3 numbers input and tell if they can be the sides of a triangle.
 
 
 // #include<iostream>
@@ -295,9 +339,9 @@
 // }
 
 
-// TODO: WAP to check if a number is prime or not.
+// TODO: Q11. WAP to check if a number is prime or not.
 
-
+////false approach
 // #include<iostream>
 // using namespace std;
 // int main(){
@@ -309,14 +353,14 @@
 //             if(j%i!=0){
 //             }
 //         }
-//                 cout<<i<<endl;
+//         cout<<i<<endl;
 //     }
 // }
 
 
 
+// TODO: 12 WAP to print odd numbers from 1 to 100.
 
-// TODO: WAP to print odd numbers from 1 to 100.
 // #include<iostream>
 // using namespace std;
 // int main(){
@@ -333,7 +377,7 @@
 //     return 0;
 // }
 
-// TODO: Ques : WAP to count digits of a given number.
+// TODO: 13 Ques : WAP to count digits of a given number.
 // #include<iostream>
 // using namespace std;
 // //// int main(){
@@ -361,7 +405,7 @@
 // }
 
 
-// TODO: If the marks are greater than 33 print the result as pass otherwise fail without using if-else statement.
+// TODO: 14 If the marks are greater than 33 print the result as pass otherwise fail without using if-else statement.
 
 
 // #include<iostream>
@@ -374,7 +418,7 @@
 // } 
 
 
-// TODO: To input week number(1-7) and print day of week name using switch case.
+// TODO: Qs15.To input week number(1-7) and print day of week name using switch case.
 
 // #include<iostream>
 // using namespace std;
@@ -412,7 +456,7 @@
 
 
 
-// TODO: WAP To input month number and print total number of days in month using switch case.
+// TODO: 16 WAP To input month number and print total number of days in month using switch case.
 // #include<iostream>
 // using namespace std;
 // int main(){
@@ -459,9 +503,9 @@
 //         default:
 //             cout<<"Invalid input";
 //     }
-}
+// }
 
-// TODO: WAP to create a calculator that performs basic arithmetic operations (add, subtract, multiply and divide) using switch case and functions. The calculator should input two numbers and an operator from user.
+// TODO: 17 WAP to create a calculator that performs basic arithmetic operations (add, subtract, multiply and divide) using switch case and functions. The calculator should input two numbers and an operator from user.
 // #include<iostream>
 // using namespace std;
 // int main(){
@@ -469,7 +513,6 @@
 //    char op;
 //    cout<<"Enter op: ";
 //    cin>>a>>op>>b;
-   
 //     }
 
 

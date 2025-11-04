@@ -1,6 +1,4 @@
-// TODO:print '*' rectangle from user input.
-
-
+// TODO: print '*' rectangle from user input.
 
 
 // #include<iostream>
@@ -94,10 +92,20 @@
 // 123
 // 1234
 // 12345
-
+// *
+// !
+// ?
 
 
 // TODO: Print a right-angled triangle pattern with odd numbers starting from 1 in each row
+// * #include<iostream> 
+//  ! #include<iostream>
+// ? #include<iostream>
+// * dtfyguhgyftdf
+// !tercfyvgubhnj
+// * tesdryfgvubhugvytr
+// !tdecrfyvgubhnj
+// ?erdtfgyubhinj
 // #include<iostream>
 // using namespace std;
 // int main(){
@@ -105,6 +113,7 @@
 //     cout<<"n: ";
 //     cin>>n;
 //     for(int i=1;i<=n;i++){
+    // ? for loop
 //         int m=1;
 //         for(int j=1;j<=i;j++){
 //             cout<<m;
@@ -166,7 +175,7 @@
 
 
 // #include<iostream>
-// using namespace std;
+// using namespace std;a
 // int main(){
 //     int i,j,n;
 //     cout<<"n: ";
@@ -207,7 +216,7 @@
 //         }
 //     cout<<endl;
 //     }
-//     return 0;
+// return 0;
 // }
 
 
@@ -223,7 +232,7 @@
 //     cout<<"n: ";
 //     cin>>n;
 //     int k=1;
-//     for(int i = 1;i<=n;i++){
+//     for(int i=1;i<=n;i++){
 //         for(int j=1;j<=n-i;j++){
 //            cout<<" ";
 //         }
@@ -253,7 +262,7 @@
 //     cout<<"n: ";
 //     cin>>n;
 //     int k=1;
-//     for(int i = 1;i<=n;i++){
+//     for(int i=1;i<=n;i++){
 //         for(int j=1;j<=n-i;j++){
 //         cout<<" ";
 //         }
@@ -299,7 +308,7 @@
 //     int i,j,k,n;
 //     cout<<"n:";
 //     cin>>n;
-//     for(int i=1;i<+n;i++){
+//     for(int i=1;i<=n;i++){
 //         for(j=1;j<=n-i;j++){
 //             cout<<" ";
 //         }
@@ -311,53 +320,54 @@
 // }
 
 // TODO: Print a pyramid pattern with stars ('*') based on user input for rows, where the number of stars increases by 2 in each row.
-#include<iostream>
-using namespace std; 
-int main(){
-    int n;
-    cout<<"i:";
-    cin>>n;
-    int nst=1;
-    int nsp=n-1;
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=nsp;j++){
-            cout<<" ";
-            }
-            for(int j=1;j<=nst;j++){
-                cout<<"*";
-                }
-                nsp--;
-                nst+=2;
-                cout<<endl;
-                }
 
+// #include<iostream>
+// using namespace std; 
+// int main(){
+//     int n;
+//     cout<<"i:";
+//     cin>>n;
+//     int nst=1;
+//     int nsp=n-1;
+//     for(int i=1;i<=n;i++){
+//         for(int j=1;j<=nsp;j++){
+//             cout<<" ";
+//             }
+//             for(int j=1;j<=nst;j++){
+//                 cout<<"*";
+//                 }
+//                 nsp--;
+//                 nst+=2;
+//                 cout<<endl;
+//                 }
 
+//             }
 
 
 
 
 // TODO: Print a pyramid pattern with numbers increasing and then decreasing.
 
-// #include<iostream>
-// using namespace std;
-// int main(){
-//     int i,j,k,n;
-//     cout<<"n:";
-//     cin>>n;
-//     for(int i=1;i<n;i++){
-//         for(k=1;k<=n-i;k++){
-//             cout<<" ";
-//         }
-//         for(j=1;j<=i;j++){
-//         cout<<j;
-//         }
-//         for(int l=i-1;l>=1;l--){
-//             cout<<l;
-//         }
-//         cout<<endl;
-//     }
-// }
 
+#include<iostream>
+using namespace std;
+int main(){
+    int i,j,k,n;
+    cout<<"n:";
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        for(k=1;k<=n-i;k++){
+            cout<<" ";
+        }
+        for(j=1;j<=i;j++){
+        cout<<j;
+        }
+        for(int l=i-1;l>=1;l--){
+            cout<<l;
+        }
+        cout<<endl;
+    }
+}
 
 
 

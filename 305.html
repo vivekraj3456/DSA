@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Workbook - Analytical Skills-1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application is designed as an 'Interactive Answer Checker'. Since the source PDF primarily contains answer keys without the full questions, a traditional quiz is not feasible. This structure allows a user, who is presumed to have the physical workbook, to select a topic (e.g., Probability) and a specific problem set (e.g., Class Practice). The app then dynamically generates an input grid for all questions in that set. The user enters their answers, and upon submission, the app provides immediate, question-by-question feedback (correct/incorrect) and a visual performance summary (score and a bar chart). This interactive flow is vastly more efficient and engaging for self-assessment than manually cross-referencing the static answer key in the PDF. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Topic names (Permutation & Combination, Probability) and their corresponding answer keys for 'Class Practice' and 'Competition Level' sections.
+        - Goal: To inform and allow self-assessment. The primary goal is to let users quickly check their answers and understand their performance on a given problem set.
+        - Viz/Presentation Method: 
+            1. Topic/Section Selection: Presented as clean, clickable cards using HTML/CSS (Tailwind) for clear navigation.
+            2. Answer Input: A dynamically generated HTML grid is used, providing a structured and intuitive way for users to input their answers for each question number.
+            3. Results Summary: A combination of a textual score ('X / Y correct') for precise feedback and a Chart.js bar chart for an immediate, visual representation of correct vs. incorrect answers.
+        - Interaction: The user flow is driven by clicks. Selecting a card filters the content and loads the appropriate answer checker. Inputting answers and clicking 'Check Answers' triggers the validation logic, which updates the DOM to show results and renders the chart.
+        - Justification: This design directly addresses the limitation of the source material (no questions) by providing a valuable tool for checking work. The bar chart from Chart.js offers a more impactful summary of performance than just a number. All interactions are handled with vanilla JavaScript for a lightweight experience.
+        - Library/Method: Chart.js for the results chart. Vanilla JS for all core logic.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .btn-primary {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            transition: background-color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #A4907C;
+        }
+        .btn-secondary {
+            background-color: #EAE0D5;
+            color: #8D7B68;
+            transition: background-color 0.2s;
+        }
+        .btn-secondary:hover {
+            background-color: #C8B6A6;
+        }
+        .answer-input {
+            border: 1px solid #D1C5B4;
+            background-color: #FFF;
+            color: #4A4A4A;
+            text-transform: uppercase;
+        }
+        .answer-input::placeholder {
+            color: #A4907C;
+        }
+        .correct {
+            background-color: #D4EDDA !important;
+            border-color: #C3E6CB !important;
+            color: #155724 !important;
+        }
+        .incorrect {
+            background-color: #F8D7DA !important;
+            border-color: #F5C6CB !important;
+            color: #721C24 !important;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px;
+            max-height: 300px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 sm:p-6 md:p-8">
+    <div id="app" class="w-full max-w-5xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-[#6F6051]">Analytical Skills-1 Workbook</h1>
+            <p class="text-lg text-[#8D7B68] mt-2">Interactive Answer Checker</p>
+        </header>
+
+        <main id="main-content">
+            <!-- Initial View: Topic Selection -->
+            <div id="topic-selection">
+                <h2 class="text-2xl font-semibold text-center mb-6 text-[#6F6051]">Select a Topic to Practice</h2>
+                <div id="topic-cards" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                </div>
+            </div>
+
+            <!-- View 2: Answer Checker -->
+            <div id="answer-checker" class="hidden">
+                <div class="flex items-center mb-6">
+                    <button id="back-to-topics" class="btn-secondary py-2 px-4 rounded-lg font-semibold mr-4">← Back</button>
+                    <h2 id="checker-title" class="text-2xl font-semibold text-[#6F6051]"></h2>
+                </div>
+                <p class="text-center bg-[#FFF8F0] p-4 rounded-lg border border-[#EAE0D5] mb-6">Enter your answer (A, B, C, or D) for each question from your workbook, then click "Check Answers" to see your score.</p>
+                <div id="answer-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-6"></div>
+                <div class="text-center">
+                    <button id="check-answers-btn" class="btn-primary py-3 px-8 rounded-lg font-bold text-lg">Check Answers</button>
+                </div>
+            </div>
+            
+            <!-- View 3: Results -->
+            <div id="results-view" class="hidden text-center">
+                 <div class="flex items-center mb-6 justify-center relative">
+                    <h2 id="results-title" class="text-2xl font-semibold text-[#6F6051]"></h2>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <h3 class="text-xl font-semibold mb-2">Your Performance</h3>
+                    <p id="score-text" class="text-3xl font-bold text-[#8D7B68] mb-4"></p>
+                    <div class="chart-container mb-6">
+                        <canvas id="resultsChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">Review your answers above. Correct answers are highlighted in green.</p>
+                     <button id="try-again-btn" class="btn-primary py-2 px-6 rounded-lg font-semibold">Try Again</button>
+                     <button id="main-menu-btn" class="btn-secondary py-2 px-6 rounded-lg font-semibold ml-4">Main Menu</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        const answerKeys = {
+            'Permutation and Combination': {
+                'Class Practice': ['A', 'D', 'C', 'C', 'A', 'A', 'A', 'D', 'C', 'B', 'C', 'B', 'B', 'B', 'B', 'B', 'A', 'B', 'B', 'C'],
+                'Competition Level': ['A', 'B', 'B', 'A', 'A', 'C', 'B', 'B', 'B', 'A', 'A', 'A', 'C', 'A', 'A', 'C', 'B', 'B', 'D', 'D']
+            },
+            'Probability': {
+                'Class Practice': ['B', 'C', 'D', 'C', 'A', 'C', 'D', 'B', 'B', 'A', 'B', 'A', 'B', 'D', 'A', 'B', 'C', 'A', 'B', 'C', 'D', 'A'],
+                'Competition Level': ['B', 'A', 'A', 'C', 'B', 'B', 'B', 'A', 'D', 'B', 'D', 'A', 'D', 'D', 'B', 'A', 'B', 'A', 'A', 'A']
+            }
+        };
+
+        const topicSelectionView = document.getElementById('topic-selection');
+        const answerCheckerView = document.getElementById('answer-checker');
+        const resultsView = document.getElementById('results-view');
+        
+        const topicCardsContainer = document.getElementById('topic-cards');
+        const checkerTitle = document.getElementById('checker-title');
+        const answerGrid = document.getElementById('answer-grid');
+        const checkAnswersBtn = document.getElementById('check-answers-btn');
+        const backToTopicsBtn = document.getElementById('back-to-topics');
+        
+        const resultsTitle = document.getElementById('results-title');
+        const scoreText = document.getElementById('score-text');
+        const tryAgainBtn = document.getElementById('try-again-btn');
+        const mainMenuBtn = document.getElementById('main-menu-btn');
+        
+        let currentTopic = '';
+        let currentSection = '';
+        let resultsChart = null;
+
+        function init() {
+            renderTopicCards();
+            bindEventListeners();
+        }
+
+        function renderTopicCards() {
+            topicCardsContainer.innerHTML = '';
+            Object.keys(answerKeys).forEach(topic => {
+                const topicCard = document.createElement('div');
+                topicCard.className = 'bg-white p-6 rounded-xl shadow-md border border-gray-200';
+                
+                let sectionsHtml = '<div class="mt-4 flex flex-col space-y-3">';
+                Object.keys(answerKeys[topic]).forEach(section => {
+                    sectionsHtml += `<button class="section-btn w-full text-left p-4 rounded-lg btn-secondary" data-topic="${topic}" data-section="${section}">
+                        <span class="font-semibold">${section}</span>
+                        <span class="text-sm block">${answerKeys[topic][section].length} Questions</span>
+                    </button>`;
+                });
+                sectionsHtml += '</div>';
+
+                topicCard.innerHTML = `
+                    <h3 class="text-xl font-bold text-[#6F6051]">${topic}</h3>
+                    <p class="text-gray-500 mt-1">Select a practice level to begin.</p>
+                    ${sectionsHtml}
+                `;
+                topicCardsContainer.appendChild(topicCard);
+            });
+        }
+        
+        function showView(viewToShow) {
+            topicSelectionView.classList.add('hidden');
+            answerCheckerView.classList.add('hidden');
+            resultsView.classList.add('hidden');
+            document.getElementById(viewToShow).classList.remove('hidden');
+        }
+
+        function startPractice(topic, section) {
+            currentTopic = topic;
+            currentSection = section;
+            checkerTitle.textContent = `${topic} - ${section}`;
+            
+            const answers = answerKeys[topic][section];
+            answerGrid.innerHTML = '';
+            answers.forEach((_, index) => {
+                const questionNum = index + 1;
+                const inputWrapper = document.createElement('div');
+                inputWrapper.className = 'flex items-center bg-white p-2 rounded-lg shadow-sm';
+                inputWrapper.innerHTML = `
+                    <label for="q-${questionNum}" class="font-semibold text-gray-600 mr-2">${questionNum}.</label>
+                    <input type="text" id="q-${questionNum}" class="answer-input w-full h-10 text-center rounded-md focus:ring-2 focus:ring-[#A4907C] focus:outline-none" maxlength="1" placeholder="?">
+                `;
+                answerGrid.appendChild(inputWrapper);
+            });
+            
+            showView('answer-checker');
+            resultsView.classList.add('hidden');
+            checkAnswersBtn.classList.remove('hidden');
+        }
+
+        function checkAnswers() {
+            const correctAnswers = answerKeys[currentTopic][currentSection];
+            let score = 0;
+            const inputs = answerGrid.querySelectorAll('.answer-input');
+            
+            inputs.forEach((input, index) => {
+                const userAnswer = input.value.trim().toUpperCase();
+                const correctAnswer = correctAnswers[index];
+                
+                input.disabled = true;
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                    input.parentElement.classList.add('correct');
+                } else {
+                    input.parentElement.classList.add('incorrect');
+                    
+                    const correctAnswerSpan = document.createElement('span');
+                    correctAnswerSpan.className = 'font-bold ml-2 text-green-700';
+                    correctAnswerSpan.textContent = `(${correctAnswer})`;
+                    input.parentElement.appendChild(correctAnswerSpan);
+                }
+            });
+
+            displayResults(score, correctAnswers.length);
+        }
+        
+        function displayResults(score, total) {
+            checkAnswersBtn.classList.add('hidden');
+            resultsView.classList.remove('hidden');
+            
+            resultsTitle.textContent = `Results: ${currentTopic} - ${currentSection}`;
+            scoreText.textContent = `${score} / ${total} Correct`;
+            
+            const ctx = document.getElementById('resultsChart').getContext('2d');
+            
+            if (resultsChart) {
+                resultsChart.destroy();
+            }
+            
+            resultsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Correct', 'Incorrect'],
+                    datasets: [{
+                        label: 'Your Score',
+                        data: [score, total - score],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(255, 99, 132, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function bindEventListeners() {
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.section-btn')) {
+                    const btn = e.target.closest('.section-btn');
+                    startPractice(btn.dataset.topic, btn.dataset.section);
+                }
+            });
+
+            checkAnswersBtn.addEventListener('click', checkAnswers);
+            
+            backToTopicsBtn.addEventListener('click', () => {
+                 showView('topic-selection');
+            });
+            
+            tryAgainBtn.addEventListener('click', () => {
+                startPractice(currentTopic, currentSection);
+            });
+            
+            mainMenuBtn.addEventListener('click', () => {
+                showView('topic-selection');
+            });
+        }
+
+        init();
+    </script>
+</body>
+</html>
