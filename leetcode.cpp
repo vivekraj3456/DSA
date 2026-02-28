@@ -6,3 +6,4 @@
 // if i ,if j ;i+j=target value
 // and i!=j
 
+
