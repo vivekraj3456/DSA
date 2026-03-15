@@ -1,7 +1,7 @@
-// #include <iostream>
-// #include <vector>
-// #include <algorithm>
-// using namespace std;
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
 
 // TODO: 1_Array_Display_Values
 //* Store values in array and display them.
@@ -1064,36 +1064,30 @@
 // }
 
 // TODO: WAP to find the largest three elements in the array.
-// int main()
-// {
-//     int arr[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-//     int a = arr[0];
-//     for (int i = 0; i < 9; i++)
-//     {
-//         if (arr[i] > a)
-//         {
-//             a = arr[i];
+
+// int main(){
+//     int arr[9]={1,2,3,4,5,6,7,8,9};
+//     int a=arr[0];
+//     for (int i=0;i<9;i++){
+//         if(arr[i]>a){
+//             a=arr[i];
 //         }
 //     }
-//     int b = arr[0];
-//     for (int i = 0; i < 9; i++)
-//     {
-//         if (arr[i] > b && arr[i] != a)
-//         {
-//             b = arr[i];
+//     int b=arr[0];
+//     for(int i = 0;i<9;i++){
+//         if (arr[i]>b && arr[i]!=a){
+//             b=arr[i];
 //         }
 //     }
-//     int c = arr[0];
-//     for (int i = 0; i < 9; i++)
-//     {
-//         if (arr[i] != a && arr[i] != b && arr[i] > c)
-//         {
-//             c = arr[i];
+//     int c=arr[0];
+//     for(int i=0;i<9;i++){
+//         if (arr[i]!=a && arr[i]!=b && arr[i]>c){
+//             c=arr[i];
 //         }
 //     }
-//     cout << c << endl;
-//     cout << b << endl;
-//     cout << a;
+//     cout<<c<<endl;
+//     cout<<b<<endl;
+//     cout<<a;
 // }
 
 // TODO:Check if the given array is ced or not
@@ -1409,51 +1403,41 @@
 // }
 
 // TODO: MERGE TWO SORTED ARRAY--incomplete
+
+// * USING THREE POINTERS
 // #include<iostream>
 // #include<vector>
+// #include<algorithm>
 // using namespace std;
-// void display(vector<int> &v){
-//     for(int i=0;i<v.size();i++){
-//         cout<<v[i]<<" ";
+// void merge (vector <int>& v1,vector <int>& v2,vector<int> &v3){
+//     int i=0,j=0;
+//     while(i<v1.size() && j<v2.size()){
+//         if(v1[i]<v2[j]){
+//             v3.push_back(v1[i]);
+//             i++;
+//         }
+//         else {
+//             v3.push_back(v2[j]);
+//             j++;
+//         }
 //     }
-//     cout<<endl;
+//     while(i<v1.size()){
+//         v3.push_back(v1[i]);
+//         i++;
+//     }
+//     while(j<v2.size()){
+//         v3.push_back(v2[j]);
+//         j++;
+//     }
+//     for(int x:v3){
+//         cout<<x<<" ";
+//     }
 // }
-// void merge
 // int main(){
-//     vector<int> v;
-//     v.push_back(0);
-//     v.push_back(2);
-//     v.push_back(13);
-//     v.push_back(20);
-//     v.push_back(23);
-//     v.push_back(31);
-//     v.push_back(40);
-//     v.push_back(52);
-//     v.push_back(62);
-//     v.push_back(70);
-//     v.push_back(81);
-//     v.push_back(90);
-//     v.push_back(91);
-//     v.push_back(100);
-//     display(v);
+//     vector <int> v1={1,4,5,8};
+//     vector <int> v2={2,3,6,7,10,12};
+//     vector<int> v3;
+//     merge(v1,v2,v3);
 // }
-#include<iostream>
-#include<vector>
-using namespace std;
-int main(){
 
-     vector<int> v1={1,2,31,4,5,6,7,18,9,10};
-     vector<int> v2={11,12,213,14,15,6,17,918,19,20};
-     v1.insert(v1.end(),v2.begin(),v2.end());
-     int i=0,j=v1.size()-1;
-     while(i<j){
-            if(v1[i]>v1[j]){
-                swap(v1[i],v1[j]);
-                i++;
-            }
-            j--;
-     }
-     for(int k=0;i<v1.size();k++){
-         cout<<v1[k]<<" ";
-     }
-}
+// TODO: NEXT PERMUTATION

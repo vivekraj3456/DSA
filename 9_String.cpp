@@ -1,20 +1,25 @@
 #include<iostream>
+#include<string>
 using namespace std;
+// TODO: INTRO STRING
 // int main(){
-    // TODO: INTRO STRING
-    // char str[5]={'a','b','c','d','e'};  // \0 is null character which is used to indicate the end of the string in C-style strings. It is automatically added at the end of the string when we declare it using double quotes. But when we declare it using single quotes, we need to add it manually if we want to treat it as a string.
-
+    // char str[5]={'a','b','c','d','e'};  // "\0" is null character which is used to indicate the end of the string in C-style strings. It is automatically added at the end of the string when we declare it using double quotes. But when we declare it using single quotes, we need to add it manually if we want to treat it as a string.
+    // // cout<<str[10];
+    // cout<<str<<endl;; //output abcde
+    
     // for(int i=0;i<5;i++){
+    //     cout<<int(str[5])<<" "; //output: 1 2 3 4 
     //     cout<<str[i]<<" ";  //output a b c d e
     //     cout<<int(str[i])<<" "<<endl;  //output 97 98 99 100 101 
-        // that means char is stored in ascii value in memory and when we print it as int it will print the ascii value of that char
+    //     // that means char is stored in ascii value in memory and when we print it as int it will print the ascii value of that char
     // }
-    // cout<<int(str[5])<<" "; 
-    // cout<<str[10];
-    // cout<<str; //output abcde
 
+    // }
+// TODO: '/0'
+// int main(){
 // char str[]={'a','b','\0','c','d','e'};  // only print until \0 is encountered
 //     cout<<str; //output ab
+// }
 
 
 // char ch='a'; //output a
@@ -29,43 +34,42 @@ using namespace std;
 
 
 // TODO: STRING AS A DATA TYPE
-    // string str="vivek raj";
-    // cout<<str<<endl; //vivek raj
-    // cout<<str[0]<<endl; //v
-    // cout<<str[1]<<endl; //i
-    // cout<<str[2]<<endl; //v
-
-    
-    
+// int main(){
+//     string str="vivek raj";
+//     cout<<str<<endl; //vivek raj
+//     cout<<str[0]<<endl; //v
+//     cout<<str[1]<<endl; //i
+//     cout<<str[2]<<endl; //v
 // }
 
 // TODO: Input a string of length n and count all the vowels in the given string
 // int main(){
-    // string str="jgfsajgjufajgjgfabod";
-    // int count=0;
+//     string str="jgfsajgjufajgajgfabod";
+//     int count=0;
 
-    // for(int i=0;i<str.length();i++){
-    //     if(str[i]=='a' || str[i]=='e' || str[i]=='i' ||str[i]== 'o' || str[i]=='u' ){
-    //         count++;
-    //     }
-    // }
-    // cout<<count;
+//     for(int i=0;i<str.length();i++){
+//         if(str[i]=='a' || str[i]=='e' || str[i]=='i' ||str[i]== 'o' || str[i]=='u' ){
+//             count++;
+//         }
+//     }
+//     cout<<count;
 // }
-
-// int main(){
-//     string str1="VIVEK IS CUREENTLY IN 3RD SEMESTER";
-//     cout<<str1; //this will print whole-"VIVEK IS CUREENTLY IN 3RD SEMESTER
-//     string s; //string intialization
-//     cout<<"Enter string: ";
-//     cin>>s; //string input  
-//     cout<<"The string is :"<<s;
-//      // this will print first word of string ,when we put value of string then it will print whole string but if we take input then it prints onlu first word
-         
+// TODO: PRINT STRING
+int main(){
+    // string str1="VIVEK IS CUREENTLY IN 3RD SEMESTER";
+    // cout<<str1<<endl; //this will print whole-"VIVEK IS CUREENTLY IN 3RD SEMESTER
+    // string s; //string intialization
+    // cout<<"Enter string: ";
+    // cin>>s; //string input  
+    // cout<<"The string is :"<<s<<endl;;
+    //  // this will print first word of string ,when we put value of string then it will print whole string but if we take input then it prints onlu first word
+}
+// * so  the solution is getline
+//     int main(){
+//     string s1;
+//     cout<<"Name: ";
+//     getline(cin,s1);  // reads the entire line from input (including spaces)
+//     cout<<s1;  // prints the complete name entered by the user
+    
 // }  
-// so  the soln is getline
-// int main(){
-//     string s;
-//     cout<<"name: ";
-//     getline(cin,s); //using this tupe if input
-//     cout<<s;  // it will print whole string  
-// }
+
