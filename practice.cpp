@@ -1,4 +1,9 @@
 #include<iostream>
+#include<vector>
+#include<string>
+#include<sstream>
+#include<algorithm>
+// #include<math>
 using namespace std;
 // int main(){
     // int n;
@@ -221,4 +226,79 @@ using namespace std;
 
 
 
-// todo: 
+// TODO: HASHING
+
+// #include<iostream>
+// using namespace std;
+// int main(){
+//     string s;
+//     cin>>s;
+    
+//     // int hash[26]={0}; //hash array to store the frequency of each character in the string. It is initialized to 0 for all characters. The index of the hash array corresponds to the character's position in the alphabet (0 for 'a', 1 for 'b', ..., 25 for 'z').
+//     int hash[256]={0}; //hash array to store the frequency of each character in the string. It is initialized to 0 for all characters. The index of the hash array corresponds to the ASCII value of the character (0 for null character, 1 for start of heading, ..., 255 for extended ASCII characters).
+//     for(int i =0;i<s.size();i++){
+//         hash[s[i]-'a']++; // It is used to increment the frequency count of the character s[i] in the hash array. The expression s[i]-'a' calculates the index in the hash array corresponding to the character s[i]. For example, if s[i] is 'a', then s[i]-'a' will be 0, and if s[i] is 'b', then s[i]-'a' will be 1, and so on. This way, we can keep track of how many times each character appears in the string.
+//     }
+// // q->query for frequency of a character in the string
+//     int q;
+//     cin>>q;
+//     while(q--){
+//         char ch;
+//         cin>>ch;
+//         // cout<<hash[ch-'a']<<endl; // It is used to print the frequency count of the character ch in the string. The expression ch-'a' calculates the index in the hash array corresponding to the character ch, and hash[ch-'a'] gives us the frequency count of that character. For example, if ch is 'a', then ch-'a' will be 0, and hash[0] will give us the count of 'a' in the string. If ch is 'b', then ch-'a' will be 1, and hash[1] will give us the count of 'b' in the string, and so on.
+//         cout<<hash[ch]<<endl; // I      It is used to print the frequency count of the character ch in the string. The expression hash[ch] gives us the frequency count of the character ch directly, since the index of the hash array corresponds to the ASCII value of the character. For example, if ch is 'a', then hash['a'] will give us the count of 'a' in the string. If ch is 'b', then hash['b'] will give us the count of 'b' in the string, and so on. This approach allows us to handle a wider range of characters beyond just lowercase letters.
+//     }
+//     return 0;
+// }
+
+//===========USIGN_HASH=============================
+// TODO: HASH_MAP
+// int main(){
+//     int n;
+//     cin>>n;
+//     int arr[n];
+//     map<int,int>mpp;
+//     for(int i=0;i<n;i++){
+//         cin>>arr[i];
+//         mpp[arr[i]]++;
+//     }
+//     int q;
+//     cin>>q;
+//     while(q--){
+//         int x;
+//         cin>>x;
+//         cout<<mpp[x]<<endl;
+//     }
+// }
+
+// int main(){
+//     int n;
+//     cin>>n;
+//     int arr[n];
+//     unordered_map<int, int> mpp;
+//     for(int i=0;i<n;i++){
+//         cin>>arr[i];
+//         mpp[arr[i]]++;
+//     }
+//     for(auto it : mpp){
+//         cout<<it.first<<" "<<it.second<<endl;
+//     }
+//     int q;
+//     cin>>q;
+//     while(q--){
+//         int x;
+//         cin>>x;
+//         cout<<mpp[x]<<endl;
+//     }
+// }
+
+int main(){
+    vector<int>v1={1,2,3,4,5,6,7,8,9};
+    int a=15;
+    string s="";
+    // vector<int>v2={15};
+    s=to_string(v1);
+    int num=stoi(s);
+    int res=num*a;
+    cout<<res<<endl;
+}

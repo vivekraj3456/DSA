@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catharsis Notes Pro</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0c1020;
+      --bg-soft: #121931;
+      --surface: rgba(31, 39, 69, 0.72);
+      --surface-solid: #1f2745;
+      --surface-2: rgba(44, 54, 90, 0.72);
+      --text: #eef1ff;
+      --muted: #b8c2ef;
+      --line: rgba(156, 178, 255, 0.24);
+      --brand: #5b86ff;
+      --brand-2: #22c59a;
+      --accent: #8f6eff;
+      --warn: #ffca65;
+      --danger: #ff8f8f;
+      --success: #39d6ac;
+      --radius-xl: 22px;
+      --radius-lg: 15px;
+      --radius-md: 11px;
+      --shadow: 0 20px 46px rgba(0, 0, 0, 0.38);
+      --dur: 220ms;
+    }
+
+    body[data-theme="light"] {
+      --bg: #f2f6ff;
+      --bg-soft: #e9efff;
+      --surface: rgba(255, 255, 255, 0.78);
+      --surface-solid: #ffffff;
+      --surface-2: rgba(240, 245, 255, 0.84);
+      --text: #14203a;
+      --muted: #5e6d96;
+      --line: rgba(84, 110, 190, 0.2);
+      --brand: #2e68ff;
+      --brand-2: #149f7a;
+      --accent: #7456ff;
+      --warn: #946100;
+      --danger: #be4f4f;
+      --success: #16a67f;
+      --shadow: 0 15px 35px rgba(40, 64, 140, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% -8%, rgba(91, 134, 255, 0.22), transparent 34%),
+        radial-gradient(circle at 108% 0%, rgba(34, 197, 154, 0.17), transparent 30%),
+        linear-gradient(165deg, var(--bg), var(--bg-soft));
+      line-height: 1.45;
+      transition: background var(--dur) ease, color var(--dur) ease;
+    }
+
+    .top-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      z-index: 60;
+      background: transparent;
+    }
+
+    .top-progress > div {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      transition: width 180ms linear;
+    }
+
+    .app {
+      width: min(1260px, 96vw);
+      margin: 18px auto 24px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      animation: rise 560ms ease;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px) scale(0.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .header {
+      padding: 20px 20px 14px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(130deg, rgba(91, 134, 255, 0.12), rgba(34, 197, 154, 0.08));
+    }
+
+    .title-row {
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 24px;
+      color: #fff;
+      background: linear-gradient(140deg, var(--brand), var(--accent));
+      box-shadow: 0 10px 24px rgba(91, 134, 255, 0.38);
+      transform: translateZ(0);
+    }
+
+    h1 {
+      font-size: clamp(1.3rem, 2vw, 2rem);
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--surface-solid);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform var(--dur) ease, border-color var(--dur) ease, box-shadow var(--dur) ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(91, 134, 255, 0.55);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.14);
+    }
+
+    .btn.primary {
+      border-color: transparent;
+      color: #fff;
+      background: linear-gradient(120deg, var(--brand), var(--accent));
+    }
+
+    .btn.ghost {
+      background: transparent;
+    }
+
+    .toolbar {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .search {
+      width: 100%;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: var(--surface-solid);
+      color: var(--text);
+      padding: 10px 12px;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color var(--dur) ease;
+    }
+
+    .search:focus {
+      border-color: rgba(91, 134, 255, 0.58);
+    }
+
+    .search-stat {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 700;
+      min-width: 100px;
+      text-align: right;
+    }
+
+    .search-results {
+      display: none;
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface-solid);
+      max-height: 250px;
+      overflow: auto;
+    }
+
+    .search-results.show {
+      display: block;
+      animation: fadeIn 210ms ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .search-item {
+      padding: 10px;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+      transition: background var(--dur) ease;
+    }
+
+    .search-item:last-child {
+      border-bottom: 0;
+    }
+
+    .search-item:hover {
+      background: rgba(91, 134, 255, 0.12);
+    }
+
+    .search-item .tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--brand);
+      margin-bottom: 2px;
+    }
+
+    .search-item .text {
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 74vh;
+    }
+
+    .sidebar {
+      padding: 12px;
+      border-right: 1px solid var(--line);
+      background: rgba(19, 25, 45, 0.28);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    body[data-theme="light"] .sidebar {
+      background: rgba(250, 252, 255, 0.56);
+    }
+
+    .tab {
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      padding: 9px 10px;
+      background: transparent;
+      color: var(--muted);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-weight: 700;
+      transition: all var(--dur) ease;
+    }
+
+    .tab:hover {
+      color: var(--text);
+      background: rgba(91, 134, 255, 0.12);
+    }
+
+    .tab.active {
+      color: var(--text);
+      border-color: rgba(91, 134, 255, 0.5);
+      background: rgba(91, 134, 255, 0.18);
+      transform: translateX(2px);
+    }
+
+    .tab small {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 2px 8px;
+      font-size: 0.71rem;
+      font-weight: 800;
+      background: var(--surface-solid);
+    }
+
+    .main {
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: rgba(91, 134, 255, 0.08);
+    }
+
+    body[data-theme="light"] .panel-head {
+      background: rgba(91, 134, 255, 0.07);
+    }
+
+    .panel-title {
+      font-size: 0.99rem;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+    }
+
+    .panel-body {
+      padding: 12px;
+    }
+
+    .content-wrap {
+      animation: contentIn 260ms ease;
+    }
+
+    @keyframes contentIn {
+      from { opacity: 0; transform: translateY(7px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .intro {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 11px;
+      background: rgba(91, 134, 255, 0.09);
+      margin-bottom: 10px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-solid);
+      color: var(--muted);
+      padding: 5px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-solid);
+      padding: 11px;
+      transition: transform var(--dur) ease, border-color var(--dur) ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(91, 134, 255, 0.5);
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.92rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .formula {
+      margin-top: 10px;
+      border: 1px dashed rgba(91, 134, 255, 0.58);
+      border-radius: 10px;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 900;
+      background: rgba(91, 134, 255, 0.12);
+      padding: 10px;
+    }
+
+    .warning {
+      margin-top: 10px;
+      border: 1px solid rgba(255, 202, 101, 0.58);
+      border-radius: 10px;
+      background: rgba(255, 202, 101, 0.12);
+      color: var(--warn);
+      padding: 9px;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .done-btn {
+      border: 1px solid rgba(91, 134, 255, 0.55);
+      border-radius: 999px;
+      background: rgba(91, 134, 255, 0.12);
+      color: var(--text);
+      font-size: 0.77rem;
+      font-weight: 800;
+      padding: 5px 9px;
+      cursor: pointer;
+      transition: all var(--dur) ease;
+    }
+
+    .done-btn.done {
+      border-color: rgba(57, 214, 172, 0.62);
+      background: rgba(57, 214, 172, 0.14);
+    }
+
+    .stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface-solid);
+      padding: 10px;
+    }
+
+    .label {
+      font-size: 0.77rem;
+      font-weight: 800;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .value {
+      font-size: 1.15rem;
+      font-weight: 900;
+      margin-top: 4px;
+    }
+
+    .value-small {
+      font-size: 0.96rem;
+    }
+
+    .bar-wrap {
+      margin-top: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      height: 10px;
+      overflow: hidden;
+      background: rgba(91, 134, 255, 0.07);
+    }
+
+    .bar {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      transition: width 240ms ease;
+    }
+
+    .mood-row {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .mood {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 9px;
+      background: var(--surface-solid);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all var(--dur) ease;
+    }
+
+    .mood:hover {
+      transform: translateY(-1px);
+      border-color: rgba(91, 134, 255, 0.54);
+    }
+
+    .mood.active {
+      border-color: rgba(91, 134, 255, 0.65);
+      background: rgba(91, 134, 255, 0.15);
+    }
+
+    .reco {
+      margin-top: 8px;
+      border: 1px solid rgba(34, 197, 154, 0.5);
+      border-radius: 10px;
+      background: rgba(34, 197, 154, 0.11);
+      padding: 9px;
+      font-size: 0.83rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .journal textarea {
+      width: 100%;
+      min-height: 125px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface-solid);
+      color: var(--text);
+      padding: 10px;
+      font: inherit;
+    }
+
+    .btn-row {
+      margin-top: 8px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .journal-list {
+      max-height: 188px;
+      overflow: auto;
+      margin-top: 8px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .entry {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface-solid);
+      padding: 8px;
+      font-size: 0.82rem;
+    }
+
+    .entry .time {
+      color: var(--muted);
+      font-size: 0.72rem;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .chart-wrap {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface-solid);
+      padding: 8px;
+      margin-top: 8px;
+    }
+
+    .plan-box {
+      border: 1px solid rgba(143, 110, 255, 0.5);
+      border-radius: 10px;
+      background: rgba(143, 110, 255, 0.12);
+      padding: 9px;
+      font-size: 0.83rem;
+      margin-top: 8px;
+    }
+
+    .plan-box ul {
+      margin: 6px 0 0 16px;
+    }
+
+    .plan-box li {
+      margin-bottom: 4px;
+    }
+
+    .showcase-only {
+      display: none;
+    }
+
+    body[data-mode="showcase"] .showcase-only {
+      display: block;
+    }
+
+    body[data-mode="showcase"] .study-only {
+      display: none;
+    }
+
+    .hero-note {
+      border: 1px solid rgba(91, 134, 255, 0.5);
+      background: linear-gradient(120deg, rgba(91, 134, 255, 0.15), rgba(34, 197, 154, 0.12));
+      border-radius: 11px;
+      padding: 9px;
+      margin-bottom: 10px;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    mark {
+      background: #ffe66f;
+      color: #151515;
+      border-radius: 4px;
+      padding: 0 2px;
+    }
+
+    @media (max-width: 1080px) {
+      .main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 970px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        flex-direction: row;
+        overflow-x: auto;
+      }
+
+      .tab {
+        min-width: 190px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .search-stat {
+        text-align: left;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        width: 100%;
+      }
+
+      .btn {
+        flex: 1;
+        text-align: center;
+      }
+
+      .header {
+        padding: 14px 12px 12px;
+      }
+
+      .main {
+        padding: 10px;
+      }
+
+      .panel-body {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body data-theme="dark" data-mode="study">
+  <div class="top-progress" aria-hidden="true"><div id="topProgress"></div></div>
+
+  <div class="app">
+    <header class="header">
+      <div class="title-row">
+        <div class="brand">
+          <div class="logo">C</div>
+          <div>
+            <h1>Catharsis Notes Pro</h1>
+            <p class="subtitle">Mental wellness + productivity system with study depth and showcase polish.</p>
+          </div>
+        </div>
+        <div class="controls">
+          <button class="btn" id="modeToggle">Mode: Study</button>
+          <button class="btn" id="themeToggle">Theme: Dark</button>
+          <button class="btn primary" id="sessionBtn">Start 30-min Session</button>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input id="globalSearch" class="search" type="text" placeholder="Global search across all sections...">
+        <button class="btn" id="clearSearch">Clear</button>
+        <div class="search-stat" id="searchStat">0 matches</div>
+      </div>
+      <div id="searchResults" class="search-results"></div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="tabs"></aside>
+
+      <main class="main">
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title" id="sectionTitle">Overview</div>
+              <div class="subtitle" id="sectionSubtitle">Your current section</div>
+            </div>
+            <button id="markDone" class="done-btn">Mark Done</button>
+          </div>
+          <div class="panel-body">
+            <div class="hero-note showcase-only">Showcase mode: recruiter-facing presentation with premium design language and product depth.</div>
+            <article id="content" class="content-wrap"></article>
+          </div>
+        </section>
+
+        <aside class="panel">
+          <div class="panel-head">
+            <div class="panel-title">Performance Dashboard</div>
+          </div>
+          <div class="panel-body stack">
+            <div class="stat">
+              <div class="label">Daily Streak</div>
+              <div class="value" id="streakValue">0 days</div>
+              <div class="subtitle">Consistency beats intensity.</div>
+            </div>
+
+            <div class="stat">
+              <div class="label">Completion</div>
+              <div class="value" id="completionValue">0%</div>
+              <div class="bar-wrap"><div class="bar" id="completionBar"></div></div>
+            </div>
+
+            <div class="stat">
+              <div class="label">Mood Tracker</div>
+              <div class="mood-row" id="moods"></div>
+              <div class="reco" id="recommendation">Pick mood for smart recommendation.</div>
+            </div>
+
+            <div class="stat">
+              <div class="label">Today Prompt</div>
+              <div class="value value-small" id="promptText">What are you currently holding inside?</div>
+              <div class="btn-row">
+                <button class="btn" id="nextPrompt">Next Prompt</button>
+                <button class="btn" id="generatePlan">Generate Plan</button>
+              </div>
+              <div class="plan-box" id="planBox">No plan generated yet.</div>
+            </div>
+
+            <div class="stat journal study-only">
+              <div class="label">Reflection Journal</div>
+              <textarea id="journalInput" placeholder="Write what you feel, what triggered it, and one next action."></textarea>
+              <div class="btn-row">
+                <button class="btn primary" id="saveJournal">Save</button>
+                <button class="btn" id="clearDraft">Clear Draft</button>
+              </div>
+              <div class="btn-row">
+                <button class="btn" id="exportTxt">Export TXT</button>
+                <button class="btn" id="exportPdf">Export PDF</button>
+              </div>
+              <div id="journalList" class="journal-list"></div>
+            </div>
+
+            <div class="chart-wrap">
+              <canvas id="completionChart" height="170"></canvas>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="moodChart" height="180"></canvas>
+            </div>
+          </div>
+        </aside>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const App = {
+        storageKey: 'catharsis-pro-v1',
+        charts: {
+          completion: null,
+          mood: null
+        },
+        moods: [
+          { key: 'anxious', emoji: '😰' },
+          { key: 'confused', emoji: '😵' },
+          { key: 'hurt', emoji: '💔' },
+          { key: 'stuck', emoji: '🧱' },
+          { key: 'empty', emoji: '🕳️' },
+          { key: 'calm', emoji: '😌' }
+        ],
+        recommendations: {
+          anxious: 'physical',
+          confused: 'intellectual',
+          hurt: 'emotional',
+          stuck: 'creative',
+          empty: 'spiritual',
+          calm: 'overview'
+        },
+        prompts: [
+          'What are you currently holding inside?',
+          'Which truth are you avoiding today?',
+          'What emotion needs expression, not suppression?',
+          'What is one tiny action that makes you proud tonight?',
+          'What can you release before sleep?'
+        ],
+        sections: [
+          {
+            id: 'overview',
+            title: 'Overview',
+            subtitle: '5 types quick map',
+            intro: 'Catharsis is emotional pressure release with awareness. If you release + understand, growth happens faster.',
+            pills: ['Emotional', 'Creative', 'Physical', 'Spiritual', 'Intellectual'],
+            cards: [
+              { title: 'Emotional', text: 'Pain, guilt, fear release for relief.' },
+              { title: 'Creative', text: 'Transform raw pain into expression.' },
+              { title: 'Physical', text: 'Movement discharges stress chemistry.' },
+              { title: 'Spiritual', text: 'Detach from ego and false identity.' },
+              { title: 'Intellectual', text: 'Insight removes internal confusion.' }
+            ],
+            formula: 'Best Catharsis = Aware Release + Understanding'
+          },
+          {
+            id: 'emotional',
+            title: 'Emotional Catharsis',
+            subtitle: 'Release with regulation',
+            intro: 'Repressed sadness, anger, shame and fear need safe processing so your nervous system can settle.',
+            pills: ['Sadness', 'Anger', 'Guilt', 'Fear', 'Shame'],
+            cards: [
+              { title: 'Safe Crying', text: 'Do not suppress. Let body complete emotional cycle.' },
+              { title: 'Journal Dump', text: '10 min uncensored writing to unfreeze emotion.' },
+              { title: 'Name the feeling', text: 'Label emotion to lower internal chaos.' },
+              { title: 'Somatic reset', text: 'Walk + exhale to regulate intensity.' }
+            ],
+            warning: 'False catharsis: rage-posting, blaming, revenge loops. These prolong suffering.'
+          },
+          {
+            id: 'creative',
+            title: 'Creative Catharsis',
+            subtitle: 'Pain into output',
+            intro: 'Creative flow converts emotional weight into meaningful expression and identity strength.',
+            cards: [
+              { title: 'Writing', text: 'Poetry, private letters, reflective essays.' },
+              { title: 'Music', text: 'Sound can bypass defensive thinking.' },
+              { title: 'Visual Art', text: 'Colors and symbols express what language cannot.' },
+              { title: 'Build Projects', text: 'Turn overthinking into shipped outcomes.' }
+            ],
+            formula: 'Pain + Awareness + Expression = Creative Power'
+          },
+          {
+            id: 'physical',
+            title: 'Physical Catharsis',
+            subtitle: 'Move first, think better',
+            intro: 'Many emotional blocks are stored as body tension. Physical discharge restores mental clarity.',
+            pills: ['Sprint for anger', 'Walk for anxiety', 'Sunlight for sadness', 'Activation for numbness'],
+            cards: [
+              { title: 'Anger', text: 'Pushups, sprint bursts, heavy bag.' },
+              { title: 'Anxiety', text: 'Long exhale walk and rhythmic steps.' },
+              { title: 'Sadness', text: 'Gentle movement + open air.' },
+              { title: 'Numbness', text: 'Fast movement and cold water reset.' }
+            ],
+            warning: 'For high BP: avoid breath holding and max strain. Prefer controlled movement.'
+          },
+          {
+            id: 'spiritual',
+            title: 'Spiritual Catharsis',
+            subtitle: 'Identity cleansing',
+            intro: 'Release attachment, ego pressure and false identity narratives to recover deep calm.',
+            pills: ['Ego', 'Attachment', 'Past guilt', 'Loss fear', 'Control obsession'],
+            cards: [
+              { title: 'Witnessing', text: 'Observe thoughts without merging with them.' },
+              { title: 'Forgiveness', text: 'Release emotional debt and reclaim energy.' },
+              { title: 'Silence', text: '15 min non-reactive stillness daily.' },
+              { title: 'Mortality view', text: 'Prioritize what truly matters now.' }
+            ],
+            formula: 'Spiritual catharsis = ego melt, not escape'
+          },
+          {
+            id: 'intellectual',
+            title: 'Intellectual Catharsis',
+            subtitle: 'Insight-driven release',
+            intro: 'Confusion drops when you challenge false beliefs and map real cause-effect patterns.',
+            cards: [
+              { title: 'Root Cause', text: 'Problem -> true cause -> controllable action.' },
+              { title: 'Belief Audit', text: 'Identify assumptions creating repeated suffering.' },
+              { title: 'Pattern Mapping', text: 'Track loops and their triggers.' },
+              { title: '3 Questions', text: 'Fact? Story? Next best action?' }
+            ],
+            warning: 'Knowledge without action is intellectual avoidance.',
+            formula: 'Confusion + Honest Inquiry = Clarity'
+          },
+          {
+            id: 'shadow-work',
+            title: 'Shadow Work',
+            subtitle: 'Own what you reject',
+            intro: 'Shadow work means meeting hidden insecurity, jealousy, anger and fear with honesty, not denial.',
+            pills: ['Triggers', 'Projection', 'Inner child', 'Defense patterns'],
+            cards: [
+              { title: 'Trigger Journal', text: 'Who triggered me and what wound did it touch?' },
+              { title: 'Projection Check', text: 'What I judge in others, where does it live in me?' },
+              { title: 'Compassion reframe', text: 'My shadow is unmet need, not evil identity.' },
+              { title: 'Integration action', text: 'One mature response for next trigger.' }
+            ],
+            formula: 'Awareness + Ownership = Shadow Integration'
+          },
+          {
+            id: 'dopamine-detox',
+            title: 'Dopamine Detox',
+            subtitle: 'Recover attention stability',
+            intro: 'Reduce overstimulation to rebuild focus, drive and reward sensitivity for meaningful work.',
+            pills: ['No short-form feed', 'No doom scroll', 'Single-task windows'],
+            cards: [
+              { title: 'Stimulus audit', text: 'List top 5 high-dopamine distractions.' },
+              { title: 'Friction design', text: 'Remove apps from home screen and disable alerts.' },
+              { title: 'Deep work block', text: '50 min focus + 10 min recovery.' },
+              { title: 'Slow reward', text: 'Read, walk, write before digital hits.' }
+            ],
+            warning: 'Detox is not punishment. It is nervous system recalibration.'
+          },
+          {
+            id: 'relationship-healing',
+            title: 'Relationship Healing',
+            subtitle: 'Repair without self-abandonment',
+            intro: 'Healing relationships requires boundaries, honest communication and emotional responsibility.',
+            pills: ['Boundaries', 'Repair', 'Attachment style', 'Mutual respect'],
+            cards: [
+              { title: 'Nonviolent language', text: 'Use: I feel, I need, I request.' },
+              { title: 'Boundary clarity', text: 'Define what is acceptable and what is not.' },
+              { title: 'Repair ritual', text: 'Acknowledge hurt, validate, commit change.' },
+              { title: 'Self-trust', text: 'Do not betray your values to avoid conflict.' }
+            ],
+            formula: 'Honesty + Boundaries + Care = Secure Connection'
+          },
+          {
+            id: 'career-anxiety',
+            title: 'Career Anxiety',
+            subtitle: 'Convert fear to strategy',
+            intro: 'Career stress decreases when uncertainty is converted into daily execution systems.',
+            pills: ['Skill gap map', 'Portfolio proof', 'Network consistency'],
+            cards: [
+              { title: 'Fear inventory', text: 'Name the specific fear, not vague panic.' },
+              { title: 'Control split', text: 'Separate controllable from uncontrollable.' },
+              { title: 'Weekly proof', text: 'Ship one visible output each week.' },
+              { title: 'Opportunity loop', text: 'Apply, follow-up, iterate narrative.' }
+            ],
+            warning: 'Anxiety drops when evidence of progress rises.'
+          },
+          {
+            id: 'identity-reset',
+            title: 'Identity Reset',
+            subtitle: 'Rebuild self-concept intentionally',
+            intro: 'Identity reset means choosing who you become through repeated aligned actions.',
+            pills: ['Values', 'Narrative shift', 'Keystone habits', 'Future self'],
+            cards: [
+              { title: 'Old identity obituary', text: 'What version of me is now expired?' },
+              { title: 'New identity script', text: 'Who am I becoming and why now?' },
+              { title: 'Keystone behavior', text: 'One daily behavior proving new identity.' },
+              { title: 'Proof tracker', text: 'Log wins that reinforce your new story.' }
+            ],
+            formula: 'Identity = Repeated Evidence'
+          },
+          {
+            id: 'ranking',
+            title: 'Personal Ranking',
+            subtitle: 'For deep thinker profile',
+            intro: 'Your strongest path is understanding to creation. Integrate body and emotional release for balance.',
+            cards: [
+              { title: '1. Intellectual', text: 'Highest relief through clarity.' },
+              { title: '2. Creative', text: 'Transform pain into output.' },
+              { title: '3. Spiritual', text: 'Detachment stabilizes identity.' },
+              { title: '4. Physical', text: 'Fast reset for overthinking loops.' },
+              { title: '5. Emotional', text: 'Needed for full processing.' }
+            ],
+            pills: ['10m movement', '10m journal', '10m build/sit'],
+            formula: 'Understanding -> Expression -> Action'
+          }
+        ],
+        state: {
+          theme: 'dark',
+          mode: 'study',
+          activeSection: 'overview',
+          done: {},
+          promptIndex: 0,
+          journalDraft: '',
+          journalEntries: [],
+          lastVisitDate: '',
+          streak: 0,
+          moodByDate: {},
+          planByDate: {}
+        },
+        el: {}
+      };
+
+      function todayKey() {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      }
+
+      function yesterdayKey() {
+        const d = new Date();
+        d.setDate(d.getDate() - 1);
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      }
+
+      function safeText(v) {
+        return String(v)
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#39;');
+      }
+
+      function saveState() {
+        localStorage.setItem(App.storageKey, JSON.stringify(App.state));
+      }
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(App.storageKey);
+          if (!raw) return;
+          const parsed = JSON.parse(raw);
+          App.state = { ...App.state, ...parsed };
+        } catch (error) {
+          console.warn('State load failed', error);
+        }
+      }
+
+      function updateStreak() {
+        const today = todayKey();
+        const yesterday = yesterdayKey();
+        const last = App.state.lastVisitDate;
+
+        if (!last) {
+          App.state.streak = 1;
+          App.state.lastVisitDate = today;
+          return;
+        }
+
+        if (last === today) return;
+
+        if (last === yesterday) {
+          App.state.streak += 1;
+        } else {
+          App.state.streak = 1;
+        }
+
+        App.state.lastVisitDate = today;
+      }
+
+      function getSectionById(id) {
+        return App.sections.find(section => section.id === id) || App.sections[0];
+      }
+
+      function getMoodToday() {
+        return App.state.moodByDate[todayKey()] || '';
+      }
+
+      function setMoodToday(mood) {
+        App.state.moodByDate[todayKey()] = mood;
+      }
+
+      function getRecommendation(moodKey) {
+        const sectionId = App.recommendations[moodKey] || 'overview';
+        const section = getSectionById(sectionId);
+        return { sectionId, title: section.title };
+      }
+
+      function buildTabs() {
+        App.el.tabs.innerHTML = App.sections
+          .map(section => {
+            const done = Boolean(App.state.done[section.id]);
+            return `
+              <button class="tab ${App.state.activeSection === section.id ? 'active' : ''}" data-id="${section.id}">
+                <span>${safeText(section.title)}</span>
+                <small>${done ? 'Done' : 'Todo'}</small>
+              </button>
+            `;
+          })
+          .join('');
+
+        App.el.tabs.querySelectorAll('.tab').forEach(btn => {
+          btn.addEventListener('click', () => {
+            App.state.activeSection = btn.dataset.id;
+            saveState();
+            renderAll();
+          });
+        });
+      }
+
+      function renderSection() {
+        const section = getSectionById(App.state.activeSection);
+        App.el.sectionTitle.textContent = section.title;
+        App.el.sectionSubtitle.textContent = section.subtitle;
+
+        const pills = (section.pills || []).length
+          ? `<div class="pill-row">${section.pills.map(p => `<span class="pill">${safeText(p)}</span>`).join('')}</div>`
+          : '';
+
+        const cards = (section.cards || [])
+          .map(card => `<div class="card"><strong>${safeText(card.title)}</strong><p>${safeText(card.text)}</p></div>`)
+          .join('');
+
+        const formula = section.formula ? `<div class="formula">${safeText(section.formula)}</div>` : '';
+        const warning = section.warning ? `<div class="warning">${safeText(section.warning)}</div>` : '';
+
+        App.el.content.innerHTML = `
+          <div class="intro">${safeText(section.intro)}</div>
+          ${pills}
+          <div class="cards">${cards}</div>
+          ${formula}
+          ${warning}
+        `;
+
+        App.el.markDone.classList.toggle('done', Boolean(App.state.done[section.id]));
+        App.el.markDone.textContent = App.state.done[section.id] ? 'Completed' : 'Mark Done';
+      }
+
+      function updateCompletion() {
+        const total = App.sections.length;
+        const done = App.sections.filter(section => App.state.done[section.id]).length;
+        const percent = Math.round((done / total) * 100);
+        App.el.completionValue.textContent = `${percent}%`;
+        App.el.completionBar.style.width = `${percent}%`;
+
+        const sectionIndex = App.sections.findIndex(section => section.id === App.state.activeSection) + 1;
+        const progress = Math.min(100, Math.round((sectionIndex / total) * 45 + percent * 0.55));
+        App.el.topProgress.style.width = `${progress}%`;
+      }
+
+      function renderThemeMode() {
+        document.body.setAttribute('data-theme', App.state.theme);
+        document.body.setAttribute('data-mode', App.state.mode);
+        App.el.themeToggle.textContent = `Theme: ${App.state.theme === 'dark' ? 'Dark' : 'Light'}`;
+        App.el.modeToggle.textContent = `Mode: ${App.state.mode === 'study' ? 'Study' : 'Showcase'}`;
+      }
+
+      function renderPrompt() {
+        App.state.promptIndex = Math.max(0, Math.min(App.prompts.length - 1, App.state.promptIndex));
+        App.el.promptText.textContent = App.prompts[App.state.promptIndex];
+      }
+
+      function renderStreak() {
+        const streak = App.state.streak || 0;
+        App.el.streakValue.textContent = `${streak} day${streak === 1 ? '' : 's'}`;
+      }
+
+      function renderMoodTracker() {
+        const active = getMoodToday();
+        App.el.moods.innerHTML = App.moods
+          .map(mood => `<button class="mood ${active === mood.key ? 'active' : ''}" data-key="${mood.key}">${mood.emoji} ${mood.key}</button>`)
+          .join('');
+
+        App.el.moods.querySelectorAll('.mood').forEach(button => {
+          button.addEventListener('click', () => {
+            setMoodToday(button.dataset.key);
+            saveState();
+            renderMoodTracker();
+            renderRecommendation();
+            renderMoodChart();
+          });
+        });
+      }
+
+      function renderRecommendation() {
+        const mood = getMoodToday();
+        if (!mood) {
+          App.el.recommendation.innerHTML = 'Pick mood for smart recommendation.';
+          return;
+        }
+
+        const recommendation = getRecommendation(mood);
+        App.el.recommendation.innerHTML = `Mood: <strong>${safeText(mood)}</strong> -> Recommended: <strong>${safeText(recommendation.title)}</strong> <button class="btn ghost" id="gotoReco" style="margin-left:6px; padding:4px 8px; font-size:0.75rem;">Open</button>`;
+
+        const button = document.getElementById('gotoReco');
+        if (button) {
+          button.addEventListener('click', () => {
+            App.state.activeSection = recommendation.sectionId;
+            saveState();
+            renderAll();
+          });
+        }
+      }
+
+      function renderPlan() {
+        const today = todayKey();
+        App.el.planBox.innerHTML = App.state.planByDate[today] || 'No plan generated yet.';
+      }
+
+      function generatePlan() {
+        const mood = getMoodToday();
+        const recommendation = getRecommendation(mood || 'calm');
+        const pending = App.sections.filter(section => !App.state.done[section.id]).slice(0, 2);
+        const pendingTitles = pending.map(section => section.title);
+
+        const plan = `
+          <strong>Today Plan</strong>
+          <ul>
+            <li>05 min: Breath + check-in (${mood || 'neutral'} mood).</li>
+            <li>12 min: Primary section -> ${safeText(recommendation.title)}.</li>
+            <li>08 min: Secondary section -> ${safeText(pendingTitles[0] || 'Overview')}.</li>
+            <li>05 min: Journal reflection + one concrete action.</li>
+            <li>Bonus: ${safeText(pendingTitles[1] || 'Identity Reset')} if energy remains.</li>
+          </ul>
+        `;
+
+        App.state.planByDate[todayKey()] = plan;
+        saveState();
+        renderPlan();
+      }
+
+      function renderJournal() {
+        App.el.journalInput.value = App.state.journalDraft || '';
+        App.el.journalList.innerHTML = App.state.journalEntries
+          .slice()
+          .reverse()
+          .map(entry => `
+            <article class="entry">
+              <div class="time">${safeText(entry.time)}</div>
+              <div>${safeText(entry.text)}</div>
+            </article>
+          `)
+          .join('');
+      }
+
+      function saveJournalEntry() {
+        const text = App.el.journalInput.value.trim();
+        if (!text) return;
+        App.state.journalEntries.push({
+          time: new Date().toLocaleString(),
+          text
+        });
+        App.state.journalDraft = '';
+        saveState();
+        renderJournal();
+      }
+
+      function exportJournalTxt() {
+        if (!App.state.journalEntries.length) return;
+        const lines = App.state.journalEntries.map(entry => `[${entry.time}]\n${entry.text}\n`).join('\n');
+        const blob = new Blob([lines], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `catharsis-journal-${todayKey()}.txt`;
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+
+      function exportJournalPdf() {
+        if (!App.state.journalEntries.length) return;
+        if (!window.jspdf || !window.jspdf.jsPDF) return;
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(14);
+        doc.text('Catharsis Journal Export', 14, 16);
+        doc.setFontSize(10);
+
+        let y = 24;
+        App.state.journalEntries.forEach(entry => {
+          const block = `[${entry.time}]\n${entry.text}`;
+          const lines = doc.splitTextToSize(block, 180);
+          if (y + lines.length * 6 > 280) {
+            doc.addPage();
+            y = 16;
+          }
+          doc.text(lines, 14, y);
+          y += lines.length * 6 + 4;
+        });
+
+        doc.save(`catharsis-journal-${todayKey()}.pdf`);
+      }
+
+      function normalizeText(section) {
+        const parts = [section.title, section.subtitle, section.intro, section.formula, section.warning]
+          .concat(section.pills || [])
+          .concat((section.cards || []).flatMap(card => [card.title, card.text]))
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase();
+        return parts;
+      }
+
+      function globalSearch(query) {
+        const q = query.trim().toLowerCase();
+        if (!q) {
+          App.el.searchResults.classList.remove('show');
+          App.el.searchResults.innerHTML = '';
+          App.el.searchStat.textContent = '0 matches';
+          return;
+        }
+
+        const results = [];
+        App.sections.forEach(section => {
+          const text = normalizeText(section);
+          if (!text.includes(q)) return;
+          const snippet = section.intro || section.subtitle || section.title;
+          results.push({ id: section.id, title: section.title, snippet });
+        });
+
+        App.el.searchStat.textContent = `${results.length} match${results.length === 1 ? '' : 'es'}`;
+        App.el.searchResults.innerHTML = results
+          .map(result => `
+            <article class="search-item" data-id="${result.id}">
+              <div class="tag">${safeText(result.title)}</div>
+              <div class="text">${safeText(result.snippet)}</div>
+            </article>
+          `)
+          .join('') || '<div class="search-item"><div class="text">No results found.</div></div>';
+
+        App.el.searchResults.classList.add('show');
+
+        App.el.searchResults.querySelectorAll('.search-item[data-id]').forEach(item => {
+          item.addEventListener('click', () => {
+            App.state.activeSection = item.dataset.id;
+            saveState();
+            renderAll();
+            App.el.searchResults.classList.remove('show');
+          });
+        });
+      }
+
+      function destroyChart(chart) {
+        if (chart) chart.destroy();
+      }
+
+      function renderCompletionChart() {
+        const done = App.sections.filter(section => App.state.done[section.id]).length;
+        const pending = App.sections.length - done;
+        destroyChart(App.charts.completion);
+
+        App.charts.completion = new Chart(App.el.completionChart.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: ['Done', 'Pending'],
+            datasets: [{
+              data: [done, pending],
+              backgroundColor: ['#39d6ac', '#5b86ff'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { labels: { color: getComputedStyle(document.body).getPropertyValue('--text') } }
+            }
+          }
+        });
+      }
+
+      function moodFrequency() {
+        const counts = { anxious: 0, confused: 0, hurt: 0, stuck: 0, empty: 0, calm: 0 };
+        Object.values(App.state.moodByDate).forEach(mood => {
+          if (counts[mood] !== undefined) counts[mood] += 1;
+        });
+        return counts;
+      }
+
+      function renderMoodChart() {
+        const counts = moodFrequency();
+        destroyChart(App.charts.mood);
+
+        App.charts.mood = new Chart(App.el.moodChart.getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: Object.keys(counts),
+            datasets: [{
+              label: 'Mood logs',
+              data: Object.values(counts),
+              backgroundColor: '#8f6eff',
+              borderRadius: 8
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                ticks: { color: getComputedStyle(document.body).getPropertyValue('--muted') },
+                grid: { color: 'rgba(120,120,120,0.12)' }
+              },
+              y: {
+                ticks: { color: getComputedStyle(document.body).getPropertyValue('--muted') },
+                grid: { color: 'rgba(120,120,120,0.12)' },
+                beginAtZero: true
+              }
+            },
+            plugins: {
+              legend: { labels: { color: getComputedStyle(document.body).getPropertyValue('--text') } }
+            }
+          }
+        });
+      }
+
+      function bindDom() {
+        App.el = {
+          topProgress: document.getElementById('topProgress'),
+          tabs: document.getElementById('tabs'),
+          content: document.getElementById('content'),
+          sectionTitle: document.getElementById('sectionTitle'),
+          sectionSubtitle: document.getElementById('sectionSubtitle'),
+          markDone: document.getElementById('markDone'),
+          completionValue: document.getElementById('completionValue'),
+          completionBar: document.getElementById('completionBar'),
+          modeToggle: document.getElementById('modeToggle'),
+          themeToggle: document.getElementById('themeToggle'),
+          sessionBtn: document.getElementById('sessionBtn'),
+          globalSearch: document.getElementById('globalSearch'),
+          clearSearch: document.getElementById('clearSearch'),
+          searchStat: document.getElementById('searchStat'),
+          searchResults: document.getElementById('searchResults'),
+          streakValue: document.getElementById('streakValue'),
+          moods: document.getElementById('moods'),
+          recommendation: document.getElementById('recommendation'),
+          promptText: document.getElementById('promptText'),
+          nextPrompt: document.getElementById('nextPrompt'),
+          generatePlan: document.getElementById('generatePlan'),
+          planBox: document.getElementById('planBox'),
+          journalInput: document.getElementById('journalInput'),
+          saveJournal: document.getElementById('saveJournal'),
+          clearDraft: document.getElementById('clearDraft'),
+          exportTxt: document.getElementById('exportTxt'),
+          exportPdf: document.getElementById('exportPdf'),
+          journalList: document.getElementById('journalList'),
+          completionChart: document.getElementById('completionChart'),
+          moodChart: document.getElementById('moodChart')
+        };
+      }
+
+      function renderAll() {
+        renderThemeMode();
+        buildTabs();
+        renderSection();
+        updateCompletion();
+        renderStreak();
+        renderPrompt();
+        renderMoodTracker();
+        renderRecommendation();
+        renderPlan();
+        renderJournal();
+        renderCompletionChart();
+        renderMoodChart();
+      }
+
+      function bindEvents() {
+        App.el.markDone.addEventListener('click', () => {
+          const id = App.state.activeSection;
+          App.state.done[id] = !App.state.done[id];
+          saveState();
+          renderAll();
+        });
+
+        App.el.themeToggle.addEventListener('click', () => {
+          App.state.theme = App.state.theme === 'dark' ? 'light' : 'dark';
+          saveState();
+          renderAll();
+        });
+
+        App.el.modeToggle.addEventListener('click', () => {
+          App.state.mode = App.state.mode === 'study' ? 'showcase' : 'study';
+          saveState();
+          renderAll();
+        });
+
+        App.el.globalSearch.addEventListener('input', event => {
+          globalSearch(event.target.value);
+        });
+
+        App.el.clearSearch.addEventListener('click', () => {
+          App.el.globalSearch.value = '';
+          globalSearch('');
+          App.el.globalSearch.focus();
+        });
+
+        App.el.nextPrompt.addEventListener('click', () => {
+          App.state.promptIndex = (App.state.promptIndex + 1) % App.prompts.length;
+          saveState();
+          renderPrompt();
+        });
+
+        App.el.generatePlan.addEventListener('click', () => {
+          generatePlan();
+          saveState();
+        });
+
+        App.el.journalInput.addEventListener('input', () => {
+          App.state.journalDraft = App.el.journalInput.value;
+          saveState();
+        });
+
+        App.el.saveJournal.addEventListener('click', () => {
+          saveJournalEntry();
+        });
+
+        App.el.clearDraft.addEventListener('click', () => {
+          App.state.journalDraft = '';
+          saveState();
+          renderJournal();
+          App.el.journalInput.focus();
+        });
+
+        App.el.exportTxt.addEventListener('click', exportJournalTxt);
+        App.el.exportPdf.addEventListener('click', exportJournalPdf);
+
+        App.el.sessionBtn.addEventListener('click', () => {
+          const mood = getMoodToday();
+          const recommendation = getRecommendation(mood || 'calm');
+          App.state.activeSection = recommendation.sectionId;
+          saveState();
+          renderAll();
+        });
+
+        document.addEventListener('keydown', event => {
+          if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+          const current = App.sections.findIndex(section => section.id === App.state.activeSection);
+          const next = event.key === 'ArrowRight'
+            ? (current + 1) % App.sections.length
+            : (current - 1 + App.sections.length) % App.sections.length;
+          App.state.activeSection = App.sections[next].id;
+          saveState();
+          renderAll();
+        });
+      }
+
+      function init() {
+        loadState();
+        updateStreak();
+        bindDom();
+        bindEvents();
+        renderAll();
+        saveState();
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>

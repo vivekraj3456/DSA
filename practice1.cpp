@@ -1,3 +1,9 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<sstream>
+#include<algorithm>
+using namespace std;
 // TODO: Ques : If cost price and selling price of an item is input through the keyboard, 
 // TODO: write a program to determine whether the seller has made profit or incurred loss. 
 // TODO: Also determine how much profit he made or loss he incurred.
@@ -163,21 +169,22 @@
 
 // TODO: Factorial
 
-// #include<iostream>
-// using namespace std;
-//     int fact(int n){
-//     int f=1;
-//     for(int i=1;i<=n;i++){
-//         f*=i;
-//     }
-//     return f;
-// }
-// int main(){
-//     int n;
-//     cout<<"n: ";
-//     cin>>n;
-//     fact(7);
-// }
+#include<iostream>
+using namespace std;
+    long long fact(long long n){
+    long long f=1;
+    for(long long i=1;i<=n;i++){
+    }
+        f*=i;
+    cout<<f<<endl;
+    return f;
+}
+int main(){
+    long long n;
+    cout<<"n: ";
+    cin>>n;
+    fact(n);
+}
 
 // TODO:  permutation_combination_function(ncr)
 
@@ -275,3 +282,54 @@
 
 
 
+// TODO:  LEETCODE 8. String to Integer (atoi)
+
+
+
+// int main(){
+//     int num= -12345;
+//     string s=to_string(num); //convert integer to string
+//     cout<<s<<endl; //output 12345
+//     string s2=to_string(23423); //convert integer to string
+//     cout<<s2<<endl; //output 23423
+//     string s1="54321";
+//     int num1=stoi(s1); //convert string to integer
+//     cout<<num1<<endl; //output 54321    
+// }
+// int main(){
+//     string str="42";    
+//         int x=stoi(str); //stoi is a function in C++ that converts a string to an integer. It is defined in the <string> header file and is part of the C++ Standard Library. In this code, we are using stoi to convert the string " -042" to an integer and store it in the variable x. The output will be -42 as an integer.
+//     cout<<x<<endl;
+// }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main() {
+//     int n;
+//     cin >> n;
+
+//     int arr[n];
+//     for(int i = 0; i < n; i++) {
+//         cin >> arr[i];
+//     }
+
+//     // precompute
+//     int hash[1000000] = {0};
+//     for(int i = 0; i < n; i++) {
+//         hash[arr[i]] += 1;
+//     }
+
+//     int q;
+//     cin >> q;
+
+//     while(q--) {
+//         int number;
+//         cin >> number;
+
+//         // fetch
+//         cout << hash[number] << endl;
+//     }
+
+//     return 0;
+// }

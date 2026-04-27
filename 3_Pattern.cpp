@@ -24,7 +24,7 @@
 // int main(){
 //     int i,j,n,m;
 //     cout<<"n: ";
-//     cin>>n;
+//     cin>>n; 
 //     for(int i=1;i<=n;i++){
 //         for(int j=1;j<=n;j++){
 //             cout<<j;
@@ -39,7 +39,7 @@
 // using namespace std;
 // int main(){
 //     int i,j,n,m;
-//     cout<<"no. of rows: ";
+//     cout<<"no. of rows: "; 
 //     cin>>n;
 //     // cout<<"no. of column :";
 //     // cin>>m; 

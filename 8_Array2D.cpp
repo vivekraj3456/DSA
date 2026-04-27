@@ -4,7 +4,7 @@
 #include<algorithm>
 using namespace std;
 // int main(){
-    // TODO: INTIALIZATION OF 2D ARRAY
+    // TODO 1st: INTIALIZATION OF 2D ARRAY
      // 2D array ko initialize karne ke 3 tarike hote hain
     // int arr[3][3]={{1,2,3},{4,5,6},{7,8,9}}; // 1st tarika jisme hum 2D array ko directly initialize kar dete hain
     // cout<<arr[0][0]<<" "<<arr[1][1]<<" "<<arr[2][2]<<endl;
@@ -15,7 +15,7 @@ using namespace std;
     // int arr3[][3]={1,2,3,4,5,6,7,8,9}; // 3rd tarika JISME ROWS KI GINATI NAHI DI JATI HAI BUT COLUMNS KI GINATI DI JATI HAI
     // cout<<arr3[0][0]<<" "<<arr3[1][1]<<" "<<arr3[2][2]<<endl;
 // }
-    // TODO: TRAVERSING THE 2D-ARRAY
+    // TODO 2nd: TRAVERSING THE 2D-ARRAY
     // int main(){}
 //     int arr[3][3]={1,2,3,4,5,6,7,8,9}; 
 //     for(int i =0;i<3;i++){  // i is for rows
@@ -25,7 +25,7 @@ using namespace std;
 //         cout<<endl;
 //     }
 // }
-// TODO: Taking 2D array as input from the user
+// TODO 3rd: Taking 2D array as input from the user
 // int main(){
 //     int m;
 //     cout<<"Enter the no of rows: ";
@@ -48,7 +48,7 @@ using namespace std;
 //     }
 // }
 
-// TODO: WAP to store roll number and marks obtained by 4 students side by side in a matrix.
+// TODO 4th: WAP to store roll number and marks obtained by 4 students side by side in a matrix.
 // int main(){
 //     int m;
 //     cout<<"Enter Roll no: ";
@@ -69,7 +69,7 @@ using namespace std;
 //         cout<<endl;
 //     }
 // }
-// TODO: WAP TO FIND THE LARGEST ELEMENT OF A GIVEN A 2D ARRAY OF INTEGERS
+// TODO 5th: WAP TO FIND THE LARGEST ELEMENT OF A GIVEN A 2D ARRAY OF INTEGERS
 // int main(){
 //     int arr[3][3]={12,34,56,76,4321,65,54,352,436};
 //     int max=arr[0][0];
@@ -82,7 +82,7 @@ using namespace std;
             //     }
             //     cout<<max;
             // }
-// TODO: WAP TO PRINT SUM OF ALL THE ELEMENTS OF 2D MATRIX
+// TODO 6th: WAP TO PRINT SUM OF ALL THE ELEMENTS OF 2D MATRIX
 // int main(){
 //     int arr[3][3]={12,34,56,76,21,65,54,52,436};
 //     int sum=0;
@@ -94,7 +94,7 @@ using namespace std;
 //     cout<<sum;
 // }
 
-// TODO: WAP TO PRINT THE SUM OF TWO MATRICES
+// TODO 7th: WAP TO PRINT THE SUM OF TWO MATRICES
 // int main(){
 //     int arr1[3][3]={1,2,3,4,5,6,7,8,9};
 //     int arr2[3][3]={9,8,7,6,5,4,3,2,1};
@@ -114,7 +114,7 @@ using namespace std;
 //         cout<<endl;
 //     }
 // }
-// TODO: WAP TO PRINT THE TRANSPOSE OF A MATRIX ENTERED BY THE USER AND STORE IN A NEW MATRIX
+// TODO 8th: WAP TO PRINT THE TRANSPOSE OF A MATRIX ENTERED BY THE USER AND STORE IN A NEW MATRIX
 // int main(){
 // int arr[3][3]={23,45,67,89,21,34,56,78,90};
 // int trans[3][3];
@@ -144,7 +144,7 @@ using namespace std;
 // }
 // }
 
-// TODO: WAP TO TRANSFORM THE SQUARE MATRIX
+// TODO 9th: WAP TO TRANSFORM THE SQUARE MATRIX
 // int main(){
 // int arr[3][3]={23,45,67,89,21,34,56,78,90};
 // for(int i=0;i<3;i++){
@@ -168,7 +168,7 @@ using namespace std;
 // }
 // }
 
-// TODO: WAP TO PRINT THE MULTIPLICATION OF TWO MATRICES
+// TODO 10th: WAP TO PRINT THE MULTIPLICATION OF TWO MATRICES
 
 // int main(){
 //     // *input from the user for 2 matrices
@@ -230,7 +230,7 @@ using namespace std;
 //     }
 // }
 
-// TODO: WAP TO PRINT THE ZIG-ZAG ORDER OF A MATRIX
+// TODO 11th: WAP TO PRINT THE ZIG-ZAG ORDER OF A MATRIX
 // int main(){
 //     int arr[3][3]={{1,2,3},{4,5,6},{7,8,9}};
 //     for(int i=0;i<3;i++){
@@ -248,7 +248,7 @@ using namespace std;
 //         }
 //     }
 // }
-// TODO: WAP TO PRINT THE SPIRAL ORDER OF MATRIX
+// TODO 12th: WAP TO PRINT THE SPIRAL ORDER OF MATRIX
 
 // int main(){
 //     int m;
@@ -297,7 +297,7 @@ using namespace std;
 //     }
 // }
     
-// TODO: WAP TO PRINT THE 2D ARRAY IN VECTOR FORM
+// TODO 13th: WAP TO PRINT THE 2D ARRAY IN VECTOR FORM
 // int main(){
 //     vector<int> v1;
 //     v1.push_back(1);
@@ -330,7 +330,7 @@ using namespace std;
 //     }
 // }
 
-// TODO: function to print the 2D vector
+// TODO 14th: function to print the 2D vector
 // void change(int a[3][3]){
 //     a[0][0]=100;
 // }
@@ -341,7 +341,7 @@ using namespace std;
 //     cout<<arr[0][0];
 // }
 
-// TODO: INITIALIZE 2D VECTOR
+// TODO 15th: INITIALIZE 2D VECTOR
 // int main(){
 //     vector<vector<int> > v(3,vector<int>(4,2)); //3 rows and 4 columns and all the elements are initialized to 2
 //     for(int i=0;i<v.size();i++){
@@ -355,7 +355,25 @@ using namespace std;
 // // 2 2 2 2 
 // // 2 2 2 2
 // // 2 2 2 2
-// TODO: PASCAL'S TRIANGLE
-int main(){
+// TODO 16th: PASCAL'S TRIANGLE
 
-}
+// int main(){
+//     string s="leetcode";
+//     vector<int> arr(26,0);
+//     for(int i =0;i<s.size();i++){
+//         char ch=s[i];
+//         int ascii=(int)ch;
+//         arr[ascii-97]++;
+//     }
+//     int mx=0;
+//     for(int i=0;i<26;i++){
+//         if(arr[i]>mx) mx=arr[i];
+//     }
+//     for(int i=0;i<26;i++){
+//         if(arr[i]==mx){
+//             int ascii=i+97;
+//             char ch=(char)ascii;
+//             cout<<ch<<" "<<i<<endl;
+//         }
+//     }
+// }
