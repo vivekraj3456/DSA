@@ -70,21 +70,20 @@ using namespace std;
 //     }
 //     if(isSort) cout<<"Array is sorted";
 //     else{
-
-//     //bubble sort
-//     for(int i=0;i<n-1;i++){ //passes
-//         // for(int j=0;j<n-1;j++){ //
-//         for(int j=0;j<n-1-i;j++){ //“-i is used because after every pass, the largest element gets placed at its correct position at the end of the array, so we don’t need to compare it again.”
-//             if(arr[j]>arr[j+1]){
-//                 swap(arr[j],arr[j+1]);
+//         //bubble sort
+//         for(int i=0;i<n-1;i++){ //passes
+//             // for(int j=0;j<n-1;j++){ //
+//             for(int j=0;j<n-1-i;j++){ //“-i is used because after every pass, the largest element gets placed at its correct position at the end of the array, so we don’t need to compare it again.”
+//                 if(arr[j]>arr[j+1]){
+//                     swap(arr[j],arr[j+1]);
+//                 }
 //             }
 //         }
+//         cout<<endl;
+//         for(int i=0;i<n;i++){
+//             cout<<arr[i]<<" "; //-8 -5 21 29 32 43 67 87 4312
+//         }
 //     }
-//     cout<<endl;
-//     for(int i=0;i<n;i++){
-//         cout<<arr[i]<<" "; //-8 -5 21 29 32 43 67 87 4312
-//     }
-// }
 // }
 
 // TODO:SORT A STRING IN DECREASING ORDER OF VALUES ASSOCIATED AFTER REMOVAL OF VALUES SMALLER THAN X.
@@ -122,3 +121,4 @@ using namespace std;
 //         cout<<arr[i]<<" "; 
 //     }
 // }
+

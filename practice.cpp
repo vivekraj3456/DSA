@@ -292,13 +292,32 @@ using namespace std;
 //     }
 // }
 
-int main(){
-    vector<int>v1={1,2,3,4,5,6,7,8,9};
-    int a=15;
-    string s="";
-    // vector<int>v2={15};
-    s=to_string(v1);
-    int num=stoi(s);
-    int res=num*a;
-    cout<<res<<endl;
+// int main(){
+//     vector<int>v1={1,2,3,4,5,6,7,8,9};
+//     int a=15;
+//     string s="";
+//     // vector<int>v2={15};
+//     s=to_string(v1);
+//     int num=stoi(s);
+//     int res=num*a;
+//     cout<<res<<endl;
+// }
+
+
+void swap(int *a,int *b){
+//     int temp=*a;
+//     *a=*b;
+//     *b=temp;
+// }
+// int main(){
+//     int x=10,y=30;
+//     swap(x,y);
+//     cout<<x<<" "<<y<<endl;
+// }
+
+#include<vector>
+vector<int> v={12,45,7,89,23,56,34,11};
+v.push_back(10);
+for(int i=0;i<v.size();i++){
+    cout<<v[i];
 }
