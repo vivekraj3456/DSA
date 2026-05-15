@@ -86,37 +86,56 @@ using namespace std;
     place of the smallest element, 1 is placed for the second smallest element, … N-1 is placed for the largest element
     */
 
-//     int main(){
-//     int arr[]={19,12,23,8,16};
-//     int n=5;
-//     for(int i=0;i<n;i++){
-//         cout<<arr[i]<<" ";
-//     }
-//     cout<<endl;
+    int main(){
+    int arr[]={19,12,23,8,16};
+    int n=5;
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
 
-//     vector<int> v(n,0);
-//     int x=0;
-//     for(int i=0;i<n;i++){
-//         int min=INT_MAX;
-//         int mindx= -1;
-//         for(int j=0;j<n;j++){
-//             if(v[j]==1) continue;
-//             else {
-//                 if(min>arr[j]){
-//                     min=arr[j];
-//                     mindx=j;
-//                 }
-//             }
-//         }
-//         arr[mindx]=x;
-//         v[mindx]=1; //v[mindx] is used to mark the element at index mindx as visited or processed. By setting v[mindx] to 1, we indicate that the element at index mindx has been assigned its rank and should not be considered in subsequent iterations of the loop. This helps us avoid reprocessing the same element and ensures that we only assign ranks to unprocessed elements in each iteration.
-//         x++;
-//     }
+    vector<int> v(n,0);
+    int x=0;
+    for(int i=0;i<n;i++){
+        int min=INT_MAX;
+        int mindx= -1;
+        for(int j=0;j<n;j++){
+            if(v[j]==1) continue;
+            else {
+                if(min>arr[j]){
+                    min=arr[j];
+                    mindx=j;
+                }
+            }
+        }
+        arr[mindx]=x;
+        v[mindx]=1; //v[mindx] is used to mark the element at index mindx as visited or processed. By setting v[mindx] to 1, we indicate that the element at index mindx has been assigned its rank and should not be considered in subsequent iterations of the loop. This helps us avoid reprocessing the same element and ensures that we only assign ranks to unprocessed elements in each iteration.
+        x++;
+    }
 
-//     for(int i=0;i<n;i++){
-//         cout<<arr[i]<<" ";
-//     }    
-// }
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<" ";
+    }    
+}
 
 
+// TODO:Find integer K for sorted
+/*
+Ques : Given an array, arr[] containing ‘n’ integers, the 
+task is to find an integer (say K) such that after 
+replacing each and every index of the array by |a,i– K| 
+where ( i ∈ [1, n]), results in a sorted array. If no such 
+integer exists that satisfies the above condition then 
+return -1.Find the range K
+*/
+// finḍ the range of K for which the array can be sorted after replacing each element with the absolute difference between the element and K.
+// so it will be sorted if the absolute difference between each element and K is in non-decreasing order.
+int main(){
+    int n;
+    cin>>n;
+    cout<<"Enter the array elements: ";
+    vector<int> arr(n);
 
+}
+
+    
