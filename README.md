@@ -186,7 +186,7 @@ Generated artifacts:
 * [x] Functions
 * [x] Arrays
 * [x] Strings
-* [ ] Sorting
+* [x] Sorting
 * [ ] Recursion
 * [ ] Linked List
 * [ ] Trees & Graphs

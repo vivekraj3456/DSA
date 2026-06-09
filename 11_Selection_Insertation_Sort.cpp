@@ -135,7 +135,7 @@ int main(){
     cin>>n;
     cout<<"Enter the array elements: ";
     vector<int> arr(n);
-
+    
 }
 
     
