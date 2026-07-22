@@ -102,23 +102,23 @@ using namespace std;
 
 // TODO: PUSH ZEROES TO END WHILE MAINTAINING THE RELATIVE ORDER OF OTHER ELEMENTS.
 
-// int main(){
-//     int arr[]={5,0,3,39,5,0,0,67,87,20,0,34,5,0,26};
-//     int n=15;
-//     for(int i=0;i<n;i++){
-//         cout<<arr[i]<<" ";
-//     }
-//     //bubble sort
-//     for(int i=0;i<n-1;i++){ //passes
-//         for(int j=0;j<n-1-i;j++){ //“-i is used because after every pass, the largest element gets placed at its correct position at the end of the array, so we don’t need to compare it again.”
-//             if(arr[j]==0){
-//                 swap(arr[j],arr[j+1]);
-//             }
-//         }
-//     }
-//     cout<<endl;
-//     for(int i=0;i<n;i++){
-//         cout<<arr[i]<<" "; 
-//     }
-// }
+int main(){
+    int arr[]={5,0,3,39,5,0,0,67,87,20,0,34,5,0,26};
+    int n=15;
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<" ";
+    }
+    //bubble sort
+    for(int i=0;i<n-1;i++){ //passes
+        for(int j=0;j<n-1-i;j++){ //“-i is used because after every pass, the largest element gets placed at its correct position at the end of the array, so we don’t need to compare it again.”
+            if(arr[j]==0){
+                swap(arr[j],arr[j+1]);
+            }
+        }
+    }
+    cout<<endl;
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<" "; 
+    }
+}
 

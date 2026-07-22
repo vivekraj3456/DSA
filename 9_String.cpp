@@ -89,15 +89,15 @@ using namespace std;
 // TODO 7th: Input a string of size n and Update all the even positions in the string to character ‘a’. Consider 0-based indexing
 
 // int main(){
-    // string str;
-    // cout<<"Enter a string: ";
-    // cin>>str;
-    // for(int i=0;i<str.length();i++){
-    //     if(i%2==0){
-    //         str[i]='a';
-    //     }
-    // }
-    // cout<<str<<endl;
+//     string str;
+//     cout<<"Enter a string: ";
+//     cin>>str;
+//     for(int i=0;i<str.length();i++){
+//         if(i%2==0){
+//             str[i]='a';
+//         }
+//     }
+//     cout<<str<<endl;
 // }
 
 // TODO 8th: BUILT IN STRING FUNCTIONS
