@@ -27,7 +27,7 @@ using namespace std;
 //     }
 //     if(flag==false) cout<<v[high]<<endl; 
 //!for upper bound we will print v[high] and for lower bound we will print v[low]
-
+// ok
 // }
 
 // TODO: First Occurrence Index
