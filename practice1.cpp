@@ -84,10 +84,6 @@ using namespace std;
 //         cout<<endl;
 //     }
 // }
-
-
-
-
 // TODO: Print a pyramid pattern of '*' with n rows.
 
 // #include<iostream>

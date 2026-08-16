@@ -4,7 +4,7 @@
 using namespace std;
 
 // TODO: 1_Array_Display_Values
-//* Store values in array and display them.
+// * Store values in array and display them.
 // int main(){
 //     int arr[5];
 //     arr[0]=5;
@@ -58,21 +58,21 @@ using namespace std;
 // TODO: 5_Student_Marks_Check
 // *Identify students scoring less than or equal 35.
 
-// int main(){
-//     int n;
-//     cout<<"no. of students:";
-//     cin>>n;
-//     int marks[n];
-//     cout<<"Enter the marks:";
-//     for(int i=0;i<=n-1;i++){
-//         cin>>marks[i];
-//     }
-//     for(int i=0;i<=n-1;i++){
-//         if(marks[i]<=35){
-//             cout <<"which no. of student have 25 marks: "<< i<<" ";
-//         }
-//     }
-// }
+int main(){
+    int n;
+    cout<<"no. of students:";
+    cin>>n;
+    int marks[n];
+    cout<<"Enter the marks:";
+    for(int i=0;i<=n-1;i++){
+        cin>>marks[i];
+    }
+    for(int i=0;i<=n-1;i++){
+        if(marks[i]<=35){
+            cout <<"which no. of student have 25 marks: "<< i<<" ";
+        }
+    }
+}
 
 // int main(){
 //     int arr[]={2213,23,3423,434,545,66,57,78,6,21,3,123,12,3,123,1,23,43,435,5,6,67,7,8,89,342,5,2,747,5};
@@ -290,7 +290,7 @@ using namespace std;
 //     for(int i=0;i<=8;i++){
 //         if(arr[i]>max){
 //             smax=max;
-//             max=arr[i];
+//             max=a rr[i];
 //         }
 
 //         else if (arr[i]>smax && arr[i]!=max){
