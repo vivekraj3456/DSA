@@ -59,25 +59,26 @@ using namespace std;
 
 
 // TODO: Insertion sort
-int main(){
-    int arr[14]={34,5,4,67,7,34,32,4323,4,2345,45,656,5,6};
-    int n=14;
-    for(int i=0;i<n;i++){
-        cout<<arr[i]<<" ";
-    }
-    cout<<endl;
-    for(int i=1;i<n;i++){
-            int j=i;
-            while(j>=1){
-                    if(arr[j]>arr[j-1]) break;
-                    else swap(arr[j],arr[j-1]);
-                    j--;
-        }
-    }
-    for(int i=0;i<n;i++){
-            cout<<arr[i]<<" ";
-        }
-    }
+
+// int main(){
+//     int arr[14]={34,5,4,67,7,34,32,4323,4,2345,45,656,5,6};
+//     int n=14;
+//     for(int i=0;i<n;i++){
+//         cout<<arr[i]<<" ";
+//     }
+//     cout<<endl;
+//     for(int i=1;i<n;i++){
+//             int j=i;
+//             while(j>=1){
+//                     if(arr[j]>arr[j-1]) break;
+//                     else swap(arr[j],arr[j-1]);
+//                     j--;
+//         }
+//     }
+//     for(int i=0;i<n;i++){
+//             cout<<arr[i]<<" ";
+//         }
+//     }
     
     // TODO:Ques :Replace Elements By Rank
     /*
